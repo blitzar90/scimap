@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/scimap/')
+sys.path.append('/root/scimap/')
 from main import logger
 import SocketServer
 import SimpleHTTPServer
