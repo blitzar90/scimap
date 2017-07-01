@@ -1,0 +1,25 @@
+import sys
+import main as m
+sys.path.append("/home/blitzar/projects/scigraph")
+gr=m.graph("graph","blitzar")
+for i in range(0, 100):
+	globals()['v'+str(i)]=m.vertex(gr, name='vertex number'+str(i))
+e1=m.edge(graph=gr,initial=v2,final=v1,directed=True)
+e2=m.edge(graph=gr,initial=v2,final=v3,directed=True)
+e3=m.edge(graph=gr,initial=v3,final=v1)
+r1=m.route(graph=gr,way=[e2,e3],name="Test")
+for i in range(0,100):
+	gr.appendVertex(globals()['v'+str(i)])
+gr.appendRoute(r1)
+gr.appendEdge(e2)
+gr.appendEdge(e3)
+gr.dump('test.json')
+fld=m.canvas()
+fld.loadGraph('test.json')
+print(gr.id)
+print(fld.graphs[0].vertices)
+print(fld.graphs[0].edges)
+print(fld.graphs[0].routes)
+print(fld.graphs[0].author)
+print(fld.graphs[0].name)
+print(fld.graphs[0].id)
