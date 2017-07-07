@@ -6,10 +6,7 @@ from django.shortcuts import render
 
 
 def index(request):
-	# return HttpResponse("Hello it's index page");
 	return render(request, 'scimap/index.html', {})
-
-# Create your views here.
 
 def admin(request):
 	return render(request, 'scimap/admin.html', {})
