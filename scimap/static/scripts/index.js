@@ -1,6 +1,4 @@
 (function() {
-	console.log('hello index script');
-
 	$.ajax({
 		method : 'GET',
 		url : '/nodes',
@@ -10,5 +8,5 @@
 		error : (error) => {
 			console.log(error);
 		}
-	})
+	});
 })();
