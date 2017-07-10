@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from django.core import serializers
 
 from django.shortcuts import render
 
+from .models import Node
+
+import json
+
 
 def index(request):
-	# return HttpResponse("Hello it's index page");
-	return render(request, 'scimap/index.html', {})
+	nodes = Node.objects.order_by('created')
 
-# Create your views here.
+	return render(request, 'scimap/index.html', {
+		'nodes' : list(nodes)
+	})
 
 def admin(request):
 	return render(request, 'scimap/admin.html', {})
+
+def nodes(request):
+	nodes = list(Node.objects.order_by('created')[:20].reverse().values())
+	return JsonResponse(nodes, safe=False)
