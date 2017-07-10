@@ -6,11 +6,9 @@ from django.utils import timezone
 import uuid
 
 class Node(models.Model):
-	id = models.TextField(default=uuid.uuid4(), primary_key=True)
+	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 	
 	author = models.ForeignKey('auth.User', blank=True, null=True)
-
-	slug = models.TextField(blank=True, null=True)
 	title = models.TextField()
 	description = models.TextField()
 
@@ -23,4 +21,15 @@ class Node(models.Model):
 		self.save()
 
 	def __str__(self):
-		return self.id
+		return str(self.id)
+
+
+class Route(models.Model):
+	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+
+	title = models.TextField(default='')
+
+	nodes = models.ManyToManyField(Node, blank=True, null=True)
+
+	def __str__(self):
+		return str(self.id)

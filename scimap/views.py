@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 
 from django.shortcuts import render
 
-from .models import Node
+from .models import Node, Route
 
 import json
 
@@ -29,4 +29,13 @@ def nodes(request):
 
 def node(request, uuid = 1):
 	node = model_to_dict(Node.objects.get(id=uuid))
-	return JsonResponse(node, safe=False)
+	return render(request, 'scimap/node.html', {
+		'node' : node
+	})
+	# return JsonResponse(node, safe=False)
+
+
+def routes(request):
+	routes = serializers.serialize('json', list(Route.objects.reverse()))
+
+	return JsonResponse(routes, safe=False)
