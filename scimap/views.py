@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 from django.utils.encoding import force_text
 from django.http import HttpResponse, JsonResponse
-from django.core import serializers
 from django.forms.models import model_to_dict
 from django.shortcuts import render
 from .models import Node, Route
@@ -29,8 +28,6 @@ def node(request, uuid = None):
 def route(request, uuid = None):
 	route = routeSerializer(Route.objects.get(id=uuid))
 	return JsonResponse(route.data, safe = False)
-
-
 
 def nodes(request):
 	nodes_base_resp = Node.objects.all()
