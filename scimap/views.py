@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import sys
+
+#django imports
 from django.utils.encoding import force_text
 from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from django.shortcuts import render
+
 from .models import Node, Route
 from .serializers import routeSerializer, nodeSerializer
-import json
 
 def index(request):
 	nodes = Node.objects.order_by('created')
@@ -23,6 +26,17 @@ def node(request, uuid = None):
 	return render(request, 'scimap/node.html', {
 		'node' : node
 	})
+
+def search(request):
+	return render(request, 'scimap/search.html')
+
+def getNodesByTitle(request):
+    print >>sys.stderr, request.query_params
+    #return JsonResponse(node.data, safe = False)
+	#node = nodeSerializer(Node.objects.get(title=text))
+	#print(node.data)
+    return JsonResponse(request.query_params, safe = False)
+
 
 def route(request, uuid = None):
 	route = routeSerializer(Route.objects.get(id=uuid))
