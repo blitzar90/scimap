@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
-
 from django.shortcuts import render
-
 from .models import Node, Route
-
+from .serializers import routeSerializer, nodeSerializer
 import json
-
 
 def index(request):
 	nodes = Node.objects.order_by('created')
@@ -23,8 +21,10 @@ def admin(request):
 
 
 def nodes(request):
-	nodes = list(Node.objects.order_by('created')[:20].reverse().values())
-	return JsonResponse(nodes, safe=False)
+	nodes_base_resp = Node.objects.all()
+	nodes = nodeSerializer(nodes_base_resp, many = True)
+	#nodes = list(Node.objects.order_by('created')[:20].reverse().values())
+	return JsonResponse(nodes.data, safe=False)
 
 
 def node(request, uuid = None):
@@ -33,19 +33,22 @@ def node(request, uuid = None):
 		'node' : node
 	})
 
+
+
+def routes(request):
+	routes_base_resp = Route.objects.all()
+	routes = routeSerializer(routes_base_resp, many = True)
+	#routes = serializers.serialize('json', Route.objects.all())
+	#data_unhandled = json.loads(routes)
+	#data=[]
+	#for i in xrange(0,len(data_unhandled)):
+	#	data_unhandled[i]['fields']['id']=data_unhandled[i]['pk']
+	#	data.append(data_unhandled[i]['fields'])
+	return JsonResponse(routes.data, safe=False)
+
 #def route(request, uuid = None):
 #	route = model_to_dict(Route.objects.get(id=uuid))
 #	return render(request, 'scimap/route.html', {
 #		'node' : node
 #	})
-
-
-def routes(request):
-	routes = serializers.serialize('json', Route.objects.all())
-	data_unhandled = json.loads(routes)
-	data=[]
-	for i in xrange(0,len(data_unhandled)):
-		data_unhandled[i]['fields']['id']=data_unhandled[i]['pk']
-		data.append(data_unhandled[i]['fields'])
-	return JsonResponse(data, safe=False)
-
+		
