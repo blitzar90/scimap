@@ -12,4 +12,5 @@ urlpatterns = [
 	url(r'^nodes/', nodes, name='nodes'),
 	url(r'^routes/', routes, name='routes'),
 	url(r'^cabinet/', admin, name='admin page'),
+	#url(r'^route/(?P<uuid>[^/]+)/$', route, name='route'),
 ]

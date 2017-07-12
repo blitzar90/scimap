@@ -27,15 +27,25 @@ def nodes(request):
 	return JsonResponse(nodes, safe=False)
 
 
-def node(request, uuid = 1):
+def node(request, uuid = None):
 	node = model_to_dict(Node.objects.get(id=uuid))
 	return render(request, 'scimap/node.html', {
 		'node' : node
 	})
-	# return JsonResponse(node, safe=False)
+
+#def route(request, uuid = None):
+#	route = model_to_dict(Route.objects.get(id=uuid))
+#	return render(request, 'scimap/route.html', {
+#		'node' : node
+#	})
 
 
 def routes(request):
-	routes = serializers.serialize('json', list(Route.objects.reverse()))
+	routes = serializers.serialize('json', Route.objects.all())
+	data_unhandled = json.loads(routes)
+	data=[]
+	for i in xrange(0,len(data_unhandled)):
+		data_unhandled[i]['fields']['id']=data_unhandled[i]['pk']
+		data.append(data_unhandled[i]['fields'])
+	return JsonResponse(data, safe=False)
 
-	return JsonResponse(routes, safe=False)
