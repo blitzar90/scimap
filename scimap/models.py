@@ -12,6 +12,9 @@ class Node(models.Model):
 	title = models.TextField()
 	description = models.TextField()
 
+	# incoming and outcoming nodes
+	inc = models.ManyToManyField('self')
+	out = models.ManyToManyField('self')
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)
@@ -29,7 +32,6 @@ class Route(models.Model):
 	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 
 	title = models.TextField(default='')
-
 	nodes = models.ManyToManyField(Node)
 
 	def __str__(self):

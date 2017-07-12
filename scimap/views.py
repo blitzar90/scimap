@@ -7,7 +7,7 @@ from django.forms.models import model_to_dict
 from django.shortcuts import render
 from .models import Node, Route
 from .serializers import routeSerializer, nodeSerializer
-import json
+#import json
 
 def index(request):
 	nodes = Node.objects.order_by('created')
@@ -19,21 +19,17 @@ def index(request):
 def admin(request):
 	return render(request, 'scimap/admin.html', {})
 
-
-def nodes(request):
-	nodes_base_resp = Node.objects.all()
-	nodes = nodeSerializer(nodes_base_resp, many = True)
-	#nodes = list(Node.objects.order_by('created')[:20].reverse().values())
-	return JsonResponse(nodes.data, safe=False)
-
-
 def node(request, uuid = None):
 	node = model_to_dict(Node.objects.get(id=uuid))
 	return render(request, 'scimap/node.html', {
 		'node' : node
 	})
 
-
+def nodes(request):
+	nodes_base_resp = Node.objects.all()
+	nodes = nodeSerializer(nodes_base_resp, many = True)
+	#nodes = list(Node.objects.order_by('created')[:20].reverse().values())
+	return JsonResponse(nodes.data, safe=False)
 
 def routes(request):
 	routes_base_resp = Route.objects.all()
@@ -45,10 +41,4 @@ def routes(request):
 	#	data_unhandled[i]['fields']['id']=data_unhandled[i]['pk']
 	#	data.append(data_unhandled[i]['fields'])
 	return JsonResponse(routes.data, safe=False)
-
-#def route(request, uuid = None):
-#	route = model_to_dict(Route.objects.get(id=uuid))
-#	return render(request, 'scimap/route.html', {
-#		'node' : node
-#	})
 		
