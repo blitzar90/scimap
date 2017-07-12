@@ -1,6 +1,6 @@
-from django.conf.urls import url
+# -*- coding: utf-8 -*-
 
-# from . import views
+from django.conf.urls import url
 
 from .views import index, admin, nodes, node, routes, route 
 
