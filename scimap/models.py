@@ -13,8 +13,8 @@ class Node(models.Model):
 	description = models.TextField()
 
 	# incoming and outcoming nodes
-	inc = models.ManyToManyField('self')
-	out = models.ManyToManyField('self')
+	inc = models.ManyToManyField('self', blank=True, null=True)
+	out = models.ManyToManyField('self', blank=True, null=True)
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)

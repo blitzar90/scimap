@@ -12,4 +12,4 @@ class routeSerializer(rest_serializers.ModelSerializer):
 	class Meta:
 		model = Route
 		fields = '__all__'
-		depth = 1
+		depth = 2
