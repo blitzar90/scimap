@@ -9,8 +9,20 @@ class nodeSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 		depth = 0
 
+class nodeSearchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Node
+		fields = ('id', 'Type', 'title','description' )
+		depth = 0
+
 class routeSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Route
 		fields = '__all__'
+		depth = 0
+
+class routeSearchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Route
+		fields = ('id', 'Type', 'title')
 		depth = 0

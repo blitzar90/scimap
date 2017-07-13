@@ -14,8 +14,8 @@ import rest_framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from .models import Node, Route
-from .serializers import routeSerializer, nodeSerializer
+from .models import *
+from .serializers import *
 
 def index(request):
 	nodes = Node.objects.order_by('created')
@@ -35,9 +35,14 @@ def node(request, uuid = None):
 
 def getByTitle(request, title = None):
     nodes_base_resp = Node.objects.filter(title__icontains = title)
-    nodes = nodeSerializer(nodes_base_resp, many = True)
-    
-    return JsonResponse(nodes.data, safe = False)
+    routes_base_resp = Route.objects.filter(title__icontains = title)
+  
+    nodes = nodeSearchSerializer(nodes_base_resp, many = True)
+    routes = routeSearchSerializer(routes_base_resp, many = True)
+
+    data = nodes.data + routes.data
+
+    return JsonResponse(data, safe = False)
 
 def route(request, uuid = None):
     try:

@@ -20,6 +20,10 @@ class Node(models.Model):
 	updated = models.DateTimeField(default=timezone.now)
 	published = models.DateTimeField(blank=True, null=True)
 
+	@property
+	def Type(self):
+		return 'node'
+
 	def publish(self):
 		self.published = timezone.now()
 		self.save()
@@ -33,6 +37,10 @@ class Route(models.Model):
 
 	title = models.TextField(default='')
 	nodes = models.ManyToManyField(Node)
+
+	@property
+	def Type(self):
+		return 'route'
 
 	def __str__(self):
 		return str(self.id)
