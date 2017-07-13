@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import json
 
 # django imports
 from django.utils.encoding import force_text
@@ -13,6 +14,8 @@ from django.views.decorators.csrf import csrf_exempt
 import rest_framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import parser_classes
 
 from .models import *
 from .serializers import *
@@ -49,12 +52,16 @@ def getByTitle(request, title = None):
     return JsonResponse(data, safe = False)
 
 
-def getNodesById(request, id_arr = None):
-	str_list = id_arr.split('&')
-	data=list()
-	
-	for uuid in str_list:
-		
+# using rest decorators
+@api_view(['POST'])
+@parser_classes((JSONParser,))
+def getNodesById(request, format=None):
+
+	id_list = request.data['ids']
+	data = list()
+
+	for uuid in id_list:
+
 		try:
 			curNode_base_resp = Node.objects.get(id = uuid)
 		except Node.DoesNotExist:
@@ -62,8 +69,30 @@ def getNodesById(request, id_arr = None):
 		
 		curNode = nodeSerializer(curNode_base_resp)
 		data.append(curNode.data)
-	
+
 	return JsonResponse(data, safe = False)
+
+
+#@csrf_exempt
+#def getNodesById(request):
+#	if request.method == 'POST':
+#		req = rest_framework.request.Request()
+#		data = req.data
+#	print data
+	#str_list = id_arr.split('&')
+	#data=list()
+	
+	#for uuid in str_list:
+	#	
+	#	try:
+	#		curNode_base_resp = Node.objects.get(id = uuid)
+	#	except Node.DoesNotExist:
+	#		return HttpResponse(status=404)
+	#	
+	#	curNode = nodeSerializer(curNode_base_resp)
+	#	data.append(curNode.data)
+	
+#	return JsonResponse(data, safe = False)
 
 
 def getRouteById(request, uuid = None):

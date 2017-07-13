@@ -16,7 +16,7 @@ urlpatterns = [
 	
 	url(r'^cabinet/', admin, name='admin page'),
 	
-	url(r'^api/nodes/(?P<id_arr>[^/]+)/$', getNodesById, name='getNodesById'),
+	url(r'^api/nodes/', getNodesById, name='getNodesById'),
 	
 	url(r'^api/route/(?P<uuid>[^/]+)/$', getRouteById, name='getRouteById'),
 	
