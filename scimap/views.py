@@ -27,15 +27,15 @@ def node(request, uuid = None):
 		'node' : node
 	})
 
-def search(request):
-	return render(request, 'scimap/search.html')
-
-def getNodesByTitle(request):
-    print >>sys.stderr, request.query_params
-    #return JsonResponse(node.data, safe = False)
-	#node = nodeSerializer(Node.objects.get(title=text))
-	#print(node.data)
-    return JsonResponse(request.query_params, safe = False)
+#def search(request):
+#	return render(request, 'scimap/search.html')
+#
+#def getNodesByTitle(request):
+#    print >>sys.stderr, request.query_params
+#    #return JsonResponse(node.data, safe = False)
+#	#node = nodeSerializer(Node.objects.get(title=text))
+#	#print(node.data)
+#    return JsonResponse(request.query_params, safe = False)
 
 
 def route(request, uuid = None):
