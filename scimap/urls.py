@@ -2,7 +2,7 @@
 
 from django.conf.urls import url
 
-from .views import index, admin, nodes, node, routes, route
+from .views import index, admin, nodes, node, routes, route, getByTitle
 
 urlpatterns = [
 	url(r'^$', index, name='index page'),
@@ -10,7 +10,6 @@ urlpatterns = [
 	url(r'^route/(?P<uuid>[^/]+)/$', route, name='route'),
 	url(r'^nodes/', nodes, name='nodes'),
 	url(r'^routes/', routes, name='routes'),
-	#url(r'^search/', search, name='search'),
-	#url(r'^search/getNodesByTitle/(?P<uuid>[^/]+)/', getNodesByTitle, name='getNodesByTitle'),
+	url(r'^search/(?P<title>[^/]+)/$', getByTitle, name='search'),
 	url(r'^cabinet/', admin, name='admin page')
 ]
