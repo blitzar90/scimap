@@ -34,7 +34,7 @@ def node(request, uuid = None):
 	})
 
 def getByTitle(request, title = None):
-    nodes_base_resp = Node.objects.filter(title__contains = title)
+    nodes_base_resp = Node.objects.filter(title__icontains = title)
     nodes = nodeSerializer(nodes_base_resp, many = True)
     
     return JsonResponse(nodes.data, safe = False)
