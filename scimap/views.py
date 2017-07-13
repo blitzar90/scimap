@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 
+
 def index(request):
 	nodes = Node.objects.order_by('created')
 
@@ -24,14 +25,17 @@ def index(request):
 		'nodes' : list(nodes)
 	})
 
+
 def admin(request):
 	return render(request, 'scimap/admin.html', {})
+
 
 def node(request, uuid = None):
 	node = model_to_dict(Node.objects.get(id=uuid))
 	return render(request, 'scimap/node.html', {
 		'node' : node
 	})
+
 
 def getByTitle(request, title = None):
     nodes_base_resp = Node.objects.filter(title__icontains = title)
@@ -44,7 +48,25 @@ def getByTitle(request, title = None):
 
     return JsonResponse(data, safe = False)
 
-def route(request, uuid = None):
+
+def getNodesById(request, id_arr = None):
+	str_list = id_arr.split('&')
+	data=list()
+	
+	for uuid in str_list:
+		
+		try:
+			curNode_base_resp = Node.objects.get(id = uuid)
+		except Node.DoesNotExist:
+			return HttpResponse(status=404)
+		
+		curNode = nodeSerializer(curNode_base_resp)
+		data.append(curNode.data)
+	
+	return JsonResponse(data, safe = False)
+
+
+def getRouteById(request, uuid = None):
     try:
 		route_base_resp = Route.objects.get(id=uuid)
     except Route.DoesNotExist:
@@ -54,11 +76,13 @@ def route(request, uuid = None):
 	
     return JsonResponse(route.data, safe = False)
 
+
 def nodes(request):
 	nodes_base_resp = Node.objects.all()
 	nodes = nodeSerializer(nodes_base_resp, many = True)
 	
 	return JsonResponse(nodes.data, safe = False)
+
 
 def routes(request):
 	routes_base_resp = Route.objects.all()
