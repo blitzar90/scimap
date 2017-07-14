@@ -11,7 +11,6 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 # rest_framework imports
-import rest_framework
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -71,28 +70,6 @@ def getNodesById(request, format=None):
 		data.append(curNode.data)
 
 	return JsonResponse(data, safe = False)
-
-
-#@csrf_exempt
-#def getNodesById(request):
-#	if request.method == 'POST':
-#		req = rest_framework.request.Request()
-#		data = req.data
-#	print data
-	#str_list = id_arr.split('&')
-	#data=list()
-	
-	#for uuid in str_list:
-	#	
-	#	try:
-	#		curNode_base_resp = Node.objects.get(id = uuid)
-	#	except Node.DoesNotExist:
-	#		return HttpResponse(status=404)
-	#	
-	#	curNode = nodeSerializer(curNode_base_resp)
-	#	data.append(curNode.data)
-	
-#	return JsonResponse(data, safe = False)
 
 
 def getRouteById(request, uuid = None):

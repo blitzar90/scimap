@@ -21,4 +21,5 @@ urlpatterns = [
 	url(r'^api/route/(?P<uuid>[^/]+)/$', getRouteById, name='getRouteById'),
 	
 	url(r'^api/search/(?P<title>[^/]+)/$', getByTitle, name='search'),
+
 ]

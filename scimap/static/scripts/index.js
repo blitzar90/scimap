@@ -40,41 +40,41 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		}
 	}
 
-	function prepareData(nodes) {
+	// function prepareData(nodes) {
 
-		_obj = {};
+	// 	_obj = {};
 
-		nodes = nodes.map(el => new Node(el));
+	// 	nodes = nodes.map(el => new Node(el));
 
-		links = [];
+	// 	links = [];
 
-		for (let node1 of nodes) {
+	// 	for (let node1 of nodes) {
 
-			if (node1.out) {
+	// 		if (node1.out) {
 
-				for (let node2 of nodes.filter(el => el.id != node1.id)) {
+	// 			for (let node2 of nodes.filter(el => el.id != node1.id)) {
 
-					if (node2.inc.length) {
+	// 				if (node2.inc.length) {
 						
-						for (node2_id of node2.inc) {
+	// 					for (node2_id of node2.inc) {
 
-							console.log(node2_id);
+	// 						console.log(node2_id);
 
-							let str = node1.id + '::' + node2_id;
+	// 						let str = node1.id + '::' + node2_id;
 
-							_obj[str] = true;
-						}
-					}
-				}
-			}
-		}
+	// 						_obj[str] = true;
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
 
-		console.log(_obj);
+	// 	console.log(_obj);
 
-		return {
-			nodes, links
-		}
-	}
+	// 	return {
+	// 		nodes, links
+	// 	}
+	// }
 
 
 	// var t = new NetChart({
