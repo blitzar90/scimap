@@ -21,6 +21,7 @@ from .serializers import *
 
 
 def index(request):
+
 	nodes = Node.objects.order_by('created')
 
 	return render(request, 'scimap/index.html', {
@@ -40,6 +41,7 @@ def node(request, uuid = None):
 
 
 def getByTitle(request, title = None):
+    
     nodes_base_resp = Node.objects.filter(title__icontains = title)
     routes_base_resp = Route.objects.filter(title__icontains = title)
   
@@ -73,6 +75,7 @@ def getNodesById(request, format=None):
 
 
 def getRouteById(request, uuid = None):
+    
     try:
 		route_base_resp = Route.objects.get(id=uuid)
     except Route.DoesNotExist:
@@ -84,6 +87,7 @@ def getRouteById(request, uuid = None):
 
 
 def nodes(request):
+	
 	nodes_base_resp = Node.objects.all()
 	nodes = nodeSerializer(nodes_base_resp, many = True)
 	
@@ -91,6 +95,7 @@ def nodes(request):
 
 
 def routes(request):
+	
 	routes_base_resp = Route.objects.all()
 	routes = routeSerializer(routes_base_resp, many = True)
 	
