@@ -5,15 +5,21 @@
 	<title>Стандартик</title>
 
 	<script src="static/libs/jquery/dist/jquery.min.js"></script>
+	<script src="static/libs/angular/angular.min.js"></script>
 
-	<script src="static/scripts/index.js"></script>
+	<link rel="stylesheet" href="static/libs/zoomcharts/zoomcharts.css">
 
 </head>
-<body>
-	
-	<h2>Димон-валет</h2>
+<body ng-app="scimap" ng-controller="Main" ng-init="init()">
 
-	{% for node in nodes %}
+	<div id="demo"></div>
+
+	
+	<div ng-repeat="node in nodes">
+		{[ node.title ]}
+	</div>
+	
+	<!-- {% for node in nodes %}
 	<a href="/node/{{ node.id }}"><div>
 
 		<div><h3>{{ node.title }}</h3></div>
@@ -22,6 +28,8 @@
 		<div>node.created:{{ node.created }}</div>
 		<div>node.updated:{{ node.updated }}</div>
 	</div></a>
-	{% endfor %}
+	{% endfor %} -->
+	<script src="static/libs/zoomcharts/zoomcharts.js"></script>
+	<script src="static/scripts/index.js"></script>
 </body>
 </html>

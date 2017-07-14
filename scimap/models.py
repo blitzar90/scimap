@@ -13,8 +13,8 @@ class Node(models.Model):
 	description = models.TextField()
 
 	# incoming and outcoming nodes
-	inc = models.ManyToManyField('self', blank=True, null=True)
-	out = models.ManyToManyField('self', blank=True, null=True)
+	inc = models.ManyToManyField('self', blank=True, null=True, related_name='out')
+	out = models.ManyToManyField('self', blank=True, null=True, related_name='inc')
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)
@@ -31,6 +31,12 @@ class Node(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+# class NodesRelationship(models.Model):
+#     _from = models.ForeignKey('Node', related_name='_from')
+#     _to = models.ForeignKey('Node', related_name='_to')
+
+#     class Meta:
+#         unique_together = ('_from', '_to')
 
 class Route(models.Model):
 	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
