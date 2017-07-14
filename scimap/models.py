@@ -18,9 +18,9 @@ class Node(models.Model):
 	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
-	#created = models.DateTimeField(default=timezone.now)
-	#updated = models.DateTimeField(default=timezone.now)
-	#published = models.DateTimeField(blank=True, null=True)
+	created = models.DateTimeField(default=timezone.now)
+	updated = models.DateTimeField(default=timezone.now)
+	published = models.DateTimeField(blank=True, null=True)
 
 	@property
 	def Type(self):
