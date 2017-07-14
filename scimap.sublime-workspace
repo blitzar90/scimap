@@ -1,0 +1,805 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"inf",
+				"\\infty                                            \tlatex-mathsymbols"
+			],
+			[
+				"para",
+				"\\textparagraph                                    \tlatex-document"
+			],
+			[
+				"p",
+				"\\paragraph{title}                                 \tlatex-document"
+			],
+			[
+				"begin",
+				"\\begin{document}                                  \tlatex-document"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"id",
+				"id_list"
+			],
+			[
+				"get",
+				"getNodesById"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"cs",
+				"csrf_exempt"
+			],
+			[
+				"cr",
+				"curNode_base_resp"
+			],
+			[
+				"Node",
+				"nodeSerializer"
+			],
+			[
+				"ro",
+				"routeSerializer"
+			],
+			[
+				"node",
+				"nodeSerializer"
+			],
+			[
+				"route",
+				"routeSearchSerializer"
+			],
+			[
+				"def",
+				"defs\tMethod"
+			],
+			[
+				"model",
+				"model_to_dict"
+			],
+			[
+				"de",
+				"default"
+			],
+			[
+				"spe",
+				"specList"
+			],
+			[
+				"set",
+				"set_ylim"
+			],
+			[
+				"cur",
+				"cur_ha"
+			],
+			[
+				"M",
+				"ModelSerializer"
+			],
+			[
+				"ser",
+				"serializers"
+			],
+			[
+				"equat",
+				"\\begin{equation}                                  \tlatex-document"
+			],
+			[
+				"the",
+				"theta"
+			],
+			[
+				"th",
+				"theta"
+			],
+			[
+				"sp",
+				"sp_gold"
+			],
+			[
+				"sp_res",
+				"sp_result"
+			],
+			[
+				"cu",
+				"curLs"
+			],
+			[
+				"inte",
+				"integrand"
+			],
+			[
+				"int",
+				"interpld"
+			],
+			[
+				"send",
+				"sendReply"
+			],
+			[
+				"file",
+				"fileType"
+			],
+			[
+				"db",
+				"dbAnswer"
+			],
+			[
+				"init",
+				"initial"
+			],
+			[
+				"no",
+				"nodeId"
+			],
+			[
+				"cl",
+				"client_addr"
+			],
+			[
+				"cli",
+				"client_sock"
+			],
+			[
+				"w",
+				"wFlag"
+			],
+			[
+				"__av",
+				"__avRes_"
+			],
+			[
+				"sinc",
+				"sincAv"
+			],
+			[
+				"spC",
+				"spCurve_bck"
+			],
+			[
+				"spec",
+				"specList"
+			],
+			[
+				"spectr",
+				"spectraSet"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"curr",
+				"currentRoute"
+			],
+			[
+				"curre",
+				"currentRoute"
+			],
+			[
+				"end",
+				"end-start"
+			],
+			[
+				"edge",
+				"edges"
+			],
+			[
+				"uu",
+				"uuid4"
+			],
+			[
+				"verte",
+				"vertexType"
+			],
+			[
+				"ver",
+				"vertices"
+			],
+			[
+				"genera",
+				"generateDumpingData"
+			],
+			[
+				"vert",
+				"vertex"
+			],
+			[
+				"struc",
+				"structure"
+			],
+			[
+				"log",
+				"logType"
+			],
+			[
+				"try",
+				"try\tTry/Except"
+			],
+			[
+				"ge",
+				"generateDumpingData"
+			],
+			[
+				"lo",
+				"logger"
+			],
+			[
+				"str",
+				"structure"
+			],
+			[
+				"r",
+				"routes"
+			],
+			[
+				"e",
+				"edges"
+			],
+			[
+				"name",
+				"namedPaths"
+			],
+			[
+				"inti",
+				"intial"
+			],
+			[
+				"nei",
+				"neighbour"
+			],
+			[
+				"ne",
+				"neighbours"
+			],
+			[
+				"appen",
+				"append"
+			],
+			[
+				"direc",
+				"directed"
+			],
+			[
+				"di",
+				"directed"
+			],
+			[
+				"sgn",
+				"sgnMasked"
+			],
+			[
+				"we",
+				"weight"
+			],
+			[
+				"max",
+				"maxSgX"
+			],
+			[
+				"arg",
+				"argmax"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": ".gitignore",
+			"settings":
+			{
+				"buffer_size": 53,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				"PdfLaTeX"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 311.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"Build With: LaTeX - LuaLaTeX"
+			],
+			[
+				"latextools",
+				"LaTeXTools: Check system"
+			],
+			[
+				"late",
+				"Build With: LaTeX - Basic Builder - LuaLaTeX"
+			],
+			[
+				"set syntax tex",
+				"Set Syntax: TeX"
+			],
+			[
+				"latex",
+				"LaTeXTools: Jump to PDF"
+			],
+			[
+				"package control ",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Enable Package"
+			],
+			[
+				"json",
+				"JSON Reindent: reindent file or selection"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"set s",
+				"Set Syntax: JSON"
+			],
+			[
+				"package C",
+				"Package Control: Remove Package"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"packe",
+				"Install Package Control"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 114.0,
+		"history":
+		[
+			"make_pdf",
+			"import numpy as np",
+			"type('hello')",
+			"clear"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/blitzar/projects/scimap"
+	],
+	"file_history":
+	[
+		"/home/blitzar/.config/sublime-text-3/Packages/User/LaTeXTools.sublime-settings",
+		"/home/blitzar/projects/scimap/scimap/urls.py",
+		"/home/blitzar/projects/sci/praktika/praktika.tex",
+		"/home/blitzar/projects/scimap/scimap/praktika.tex",
+		"/home/blitzar/projects/scimap/scimap/templates/scimap/index.html",
+		"/home/blitzar/projects/scimap/scimap/views.py",
+		"/home/blitzar/Downloads/07_DipolViewer/toolsCoAP_253_alpha/device.py",
+		"/home/blitzar/Downloads/07_DipolViewer/toolsCoAP_253_alpha/commonWidgets.py",
+		"/home/blitzar/Downloads/07_DipolViewer/toolsCoAP_253_alpha/specTools.py",
+		"/home/blitzar/Downloads/07_DipolViewer/DipView.py",
+		"/home/blitzar/projects/scimap/scimap/serializers.py",
+		"/home/blitzar/projects/scimap/scimap/models.py",
+		"/home/blitzar/projects/scimap/main/settings.py",
+		"/home/blitzar/Desktop/int.py",
+		"/home/blitzar/projects/scimap/scimap/templates/scimap/search.html",
+		"/home/blitzar/Downloads/07_DipolViewer/toolsCoAP_253_alpha/recTools.py",
+		"/home/blitzar/Downloads/07_DipolViewer/setup.json",
+		"/home/blitzar/projects/scigraph/scimap/serializers.py",
+		"/home/blitzar/projects/scigraph/scimap/views.py",
+		"/home/blitzar/projects/scigraph/scimap/urls.py",
+		"/home/blitzar/projects/scigraph/main/settings.py",
+		"/home/blitzar/projects/scigraph/scimap/models.py",
+		"/home/blitzar/Downloads/07_DipolViewer/db_IR.json",
+		"/home/blitzar/projects/scigraph/scimap/admin.py",
+		"/home/blitzar/projects/scigraph/scimap/apps.py",
+		"/home/blitzar/projects/scigraph/scimap/tests.py",
+		"/home/blitzar/projects/scigraph/scimap/templates/scimap/node.html",
+		"/home/blitzar/projects/scigraph/scimap/templates/scimap/route.html",
+		"/home/blitzar/projects/scigraph/scimap/templates/scimap/index.html",
+		"/home/blitzar/projects/scigraph/scimap/migrations/0006_auto_20170710_1226.py",
+		"/home/blitzar/projects/scigraph/main/urls.py",
+		"/home/blitzar/Desktop/db_KK/DB_Triptofan.sdt",
+		"/home/blitzar/20170413_DipView_113/toolsCoAP_248/commonWidgets.py",
+		"/home/blitzar/20170413_DipView_113/toolsCoAP_248/recTools.py",
+		"/home/blitzar/20170413_DipView_113/toolsCoAP_248/device.py",
+		"/home/blitzar/spectra/spec.tex",
+		"/home/blitzar/spectra.tex",
+		"/home/blitzar/20170413_DipView_113/smsk wrk/Tetranitrometan/DB_Tetranitrometan.sdt",
+		"/home/blitzar/projects/scigraph/static/scripts/db.py",
+		"/home/blitzar/projects/scigraph/static/scripts/server.py",
+		"/home/blitzar/Desktop/db_KK1/int.py",
+		"/home/blitzar/Desktop/db_KK1/DB_Aspirin.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Lactoza.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Glucoza.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Dietilftolat.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Dimeksid.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Glicerin.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Oil.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Triptofan.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Fructoza.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Fructoza2.sdt",
+		"/home/blitzar/Desktop/db_KK1/DB_Ascorbin.sdt",
+		"/home/blitzar/Desktop/exportDB.txt",
+		"/home/blitzar/Desktop/db_KK/DB_Oil.sdt",
+		"/home/blitzar/Desktop/db_KK/int.py",
+		"/home/blitzar/Desktop/db_KK/DB_Dimeksid.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_DIetilftolat.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Glicerin.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Ascorbin.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Aspirin.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Frcutoza.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Fructoza2.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Lactoza.sdt",
+		"/home/blitzar/Desktop/db_KK/DB_Glucoza.sdt",
+		"/home/blitzar/projects/scigraph/static/scripts/server_readme.txt",
+		"/home/blitzar/20170413_DipView_113/toolsCoAP_248/specTools.py",
+		"/home/blitzar/Desktop/example.py",
+		"/home/blitzar/projects/scigraph/db_log.txt",
+		"/home/blitzar/projects/scigraph/test.json",
+		"/home/blitzar/projects/scigraph/static/views/index.html",
+		"/home/blitzar/projects/scigraph/server_log.txt",
+		"/home/blitzar/projects/scigraph/server/static/index.html",
+		"/home/blitzar/projects/scigraph/scripts/server.py",
+		"/home/blitzar/projects/scigraph/main.py",
+		"/home/blitzar/projects/scigraph/server/server.py",
+		"/home/blitzar/projects/scigraph/server.py",
+		"/home/blitzar/projects/scigraph/db/readme.txt",
+		"/home/blitzar/serv.py",
+		"/home/blitzar/client.py",
+		"/home/blitzar/20170413_DipView_113/setup.json",
+		"/home/blitzar/20170413_DipView_113/DipView_113.py",
+		"/home/blitzar/projects/scigraph/log.txt",
+		"/home/blitzar/projects/scigraph/dump_test.py",
+		"/home/blitzar/projects/scigraph/test.txt",
+		"/home/blitzar/projects/mapofscience/main.py",
+		"/home/blitzar/projects/cherryathome/time_estimation.py",
+		"/home/blitzar/projects/time_estimation.py",
+		"/home/blitzar/SPECTRAN/SPECTRAN.py",
+		"/home/blitzar/20170413_DipView_113/db.json",
+		"/home/blitzar/projects",
+		"/home/blitzar/Hawking_radiation.tex"
+	],
+	"find":
+	{
+		"height": 21.0
+	},
+	"find_in_files":
+	{
+		"height": 102.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"latex",
+			"praltika",
+			"{}",
+			"avStatus",
+			"avfla",
+			"str_list",
+			"    ",
+			"proto_data",
+			"(?P<uuid>[^/]+)/$'",
+			"node",
+			"\t",
+			"self",
+			"request",
+			"routes",
+			"Drugs",
+			"drugs",
+			"rest_",
+			"node",
+			"def node(request, uuid = None):\n\tnode = model_to_dict(Node.objects.get(id=uuid))\n\treturn render(request, 'scimap/node.html', {\n\t\t'node' : node\n\t})\n",
+			"inverseMatrixRecognizer",
+			"toolsCoAP",
+			"node",
+			"Node",
+			"node",
+			"self",
+			"Node",
+			"data_",
+			"data",
+			"node",
+			"nodes",
+			"linux",
+			"15",
+			"openArchive",
+			"pprint",
+			"ppprint",
+			"theta",
+			"\t",
+			"log",
+			"self",
+			"result",
+			"curInt",
+			"##",
+			"\n##",
+			"###",
+			"##",
+			"interpld",
+			">>> ",
+			"path",
+			"objId",
+			"Node",
+			"node",
+			"nodeId",
+			"error",
+			"id",
+			"final",
+			"initial",
+			"logger.log",
+			"httpd",
+			"mime",
+			"ttp",
+			"editbkl",
+			"_bck",
+			"spec_bck",
+			"_bck",
+			"wFlag",
+			"routes",
+			"id",
+			"author",
+			"None",
+			"route",
+			"self.id",
+			"sci",
+			"self.initial.id",
+			"name",
+			"\"",
+			"today",
+			"start-end",
+			"writearchive",
+			"w",
+			"self",
+			"Time",
+			"Dumping",
+			"))",
+			"((",
+			"path",
+			"editdevice",
+			"v3",
+			"edge",
+			"route",
+			"edges",
+			">>>",
+			"path",
+			"namedPaths",
+			"vertices",
+			"name",
+			"finds",
+			"Vertex",
+			"dump",
+			"vertexes",
+			"Vertexes",
+			"minBg",
+			"maxBg",
+			"init"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": ".gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 21.0
+	},
+	"input":
+	{
+		"height": 29.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 163.0
+	},
+	"pinned_build_system": "",
+	"project": "scimap.sublime-project",
+	"replace":
+	{
+		"height": 38.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"db_am",
+				"20170413_DipView_113/smsk wrk/Tetranitrometan/DB_Tetranitrometan.sdt"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/work.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 201.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

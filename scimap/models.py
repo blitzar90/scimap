@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
 
+import uuid
+
+# django imports
 from django.db import models
 from django.utils import timezone
-import uuid
 
 
 class Node(models.Model):
@@ -13,23 +15,26 @@ class Node(models.Model):
 	description = models.TextField()
 
 	# incoming and outcoming nodes
-	inc = models.ManyToManyField('self', blank=True, null=True)
-	out = models.ManyToManyField('self', blank=True, null=True)
+	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+', )
+	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+', )
 
-	created = models.DateTimeField(default=timezone.now)
-	updated = models.DateTimeField(default=timezone.now)
-	published = models.DateTimeField(blank=True, null=True)
+	#created = models.DateTimeField(default=timezone.now)
+	#updated = models.DateTimeField(default=timezone.now)
+	#published = models.DateTimeField(blank=True, null=True)
 
 	@property
 	def Type(self):
 		return 'node'
 
-	def publish(self):
-		self.published = timezone.now()
-		self.save()
+	#def publish(self):
+	#	self.published = timezone.now()
+	#	self.save()
 
 	def __str__(self):
 		return str(self.id)
+
+	#class Meta:
+	#	unique_together = ('inc','out')
 
 
 class Route(models.Model):
