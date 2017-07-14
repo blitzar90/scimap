@@ -15,8 +15,8 @@ class Node(models.Model):
 	description = models.TextField()
 
 	# incoming and outcoming nodes
-	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+', )
-	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+', )
+	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
+	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	#created = models.DateTimeField(default=timezone.now)
 	#updated = models.DateTimeField(default=timezone.now)
