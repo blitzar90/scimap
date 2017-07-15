@@ -14,6 +14,8 @@ class Area(models.Model):
 
 	title = models.TextField(default = 'Area')
 
+	#subs = models.
+
 	def __str__(self):
 		return self.title.encode('utf8')
 
@@ -21,6 +23,8 @@ class Area(models.Model):
 class SubArea(models.Model):
 
 	title = models.TextField(default = 'Subarea')
+
+	#areas = models.
 
 	def __str__(self):
 		return self.title.encode('utf8')
@@ -39,8 +43,8 @@ class Node(models.Model):
 	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
-	area = models.ManyToManyField(Area, blank = True, related_name = 'lvl1')
-	subArea = models.ManyToManyField(SubArea, blank = True, related_name = 'lvl2')
+	area = models.ManyToManyField(Area, related_name = 'Area')
+	subArea = models.ManyToManyField(SubArea, blank = True, related_name = 'SubArea')
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)
