@@ -12,18 +12,18 @@ from django.utils import timezone
 
 class Area(models.Model):
 
-	title = models.TextField(default = 'Not a member of area')
+	title = models.TextField(default = 'Area')
 
 	def __str__(self):
-		return self.title
+		return self.title.encode('utf8')
 
 
 class SubArea(models.Model):
 
-	title = models.TextField(default = 'Not a member of subarea')
+	title = models.TextField(default = 'Subarea')
 
 	def __str__(self):
-		return self.title
+		return self.title.encode('utf8')
 
 
 class Node(models.Model):
@@ -49,8 +49,6 @@ class Node(models.Model):
 	# implement custom manager
 	#objects = NodeManager()
 
-
-
 	@property
 	def Type(self):
 		return 'node'
@@ -60,7 +58,7 @@ class Node(models.Model):
 		self.save()
 
 	def __str__(self):
-		return str(self.id)
+		return self.title.encode('utf8') + ' ' + str(self.id)
 
 
 class Route(models.Model):
@@ -75,23 +73,35 @@ class Route(models.Model):
 		return 'route'
 
 	def __str__(self):
-		return str(self.id)
+		return self.title.encode('utf8') + ' ' + str(self.id)
 
 
 # check and fix one-sided relations before saving
 
 @receiver(m2m_changed, sender = Node.inc.through)
 def checkInc(instance, action, **kwargs):
+	
 	incArr = instance.inc.all()
 	if action == 'post_add':
+		
 		for curNode in incArr:
 			nodeForUpdating = Node.objects.get(id = curNode.id)
-			nodeForUpdating.out.add(instance.id)
+			targetOut = nodeForUpdating.out.all()
+			
+			if not instance in targetOut:
+				nodeForUpdating.out.add(instance)
 
-#@receiver(m2m_changed, sender = Node.out.through)
-#def checkOut(instance, action, **kwargs):
-#	outArr = instance.out.all()
-#	if action == 'post_add':
-#		for curNode in outArr:
-#			nodeForUpdating = Node.objects.get(id = curNode.id)
-#			nodeForUpdating.inc.add(instance.id)
+
+@receiver(m2m_changed, sender = Node.out.through)
+def checkOut(instance, action, **kwargs):
+	
+	outArr = instance.out.all()
+	if action == 'post_add':
+		
+		for curNode in outArr:
+			nodeForUpdating = Node.objects.get(id = curNode.id)
+			targetInc = nodeForUpdating.inc.all()
+			
+			if not instance in targetInc:
+				nodeForUpdating.inc.add(instance)
+
