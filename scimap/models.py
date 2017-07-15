@@ -6,7 +6,8 @@ from .managers import *
 
 # django imports
 from django.db import models
-#from django import forms
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 from django.utils import timezone
 
 class Area(models.Model):
@@ -45,7 +46,10 @@ class Node(models.Model):
 	updated = models.DateTimeField(default=timezone.now)
 	published = models.DateTimeField(blank=True, null=True)
 
+	# implement custom manager
 	objects = NodeManager()
+
+
 
 	@property
 	def Type(self):
@@ -72,3 +76,11 @@ class Route(models.Model):
 
 	def __str__(self):
 		return str(self.id)
+
+# check and fix one-sided relations before saving
+@receiver(m2m_changed, sender = Node.inc.through)
+def checkRelation(instance, **kwargs):
+	print instance.id, instance.inc
+
+
+
