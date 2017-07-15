@@ -12,7 +12,7 @@ from django.utils import timezone
 
 class Area(models.Model):
 
-	title = models.TextField(default =None)
+	title = models.TextField(default = 'Not a member of area')
 
 	def __str__(self):
 		return self.title
@@ -20,7 +20,7 @@ class Area(models.Model):
 
 class SubArea(models.Model):
 
-	title = models.TextField(default=None)
+	title = models.TextField(default = 'Not a member of subarea')
 
 	def __str__(self):
 		return self.title
@@ -31,8 +31,8 @@ class Node(models.Model):
 	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
 	
 	author = models.ForeignKey('auth.User', blank=True, null=True)
-	title = models.TextField()
-	description = models.TextField(default=None)
+	title = models.TextField(default = 'Untitled')
+	description = models.TextField(default = 'No description')
 
 	# incoming and outcoming nodes
 	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
@@ -47,7 +47,7 @@ class Node(models.Model):
 	published = models.DateTimeField(blank=True, null=True)
 
 	# implement custom manager
-	objects = NodeManager()
+	#objects = NodeManager()
 
 
 
@@ -67,7 +67,7 @@ class Route(models.Model):
 
 	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
 
-	title = models.TextField(default = None)
+	title = models.TextField(default = 'Untitled')
 	nodes = models.ManyToManyField(Node)
 
 	@property
@@ -77,10 +77,21 @@ class Route(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+
 # check and fix one-sided relations before saving
+
 @receiver(m2m_changed, sender = Node.inc.through)
-def checkRelation(instance, **kwargs):
-	print instance.id, instance.inc
+def checkInc(instance, action, **kwargs):
+	incArr = instance.inc.all()
+	if action == 'post_add':
+		for curNode in incArr:
+			nodeForUpdating = Node.objects.get(id = curNode.id)
+			nodeForUpdating.out.add(instance.id)
 
-
-
+#@receiver(m2m_changed, sender = Node.out.through)
+#def checkOut(instance, action, **kwargs):
+#	outArr = instance.out.all()
+#	if action == 'post_add':
+#		for curNode in outArr:
+#			nodeForUpdating = Node.objects.get(id = curNode.id)
+#			nodeForUpdating.inc.add(instance.id)
