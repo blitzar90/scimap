@@ -39,8 +39,8 @@ class Node(models.Model):
 	description = models.TextField(default = 'No description')
 
 	# incoming and outcoming nodes
-	inc = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
-	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
+	fromNodes = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
+	toNodes = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
 	area = models.ManyToManyField(Area, related_name = 'Area')
@@ -82,30 +82,30 @@ class Route(models.Model):
 
 # check and fix one-sided relations before saving
 
-@receiver(m2m_changed, sender = Node.inc.through)
-def checkInc(instance, action, **kwargs):
+@receiver(m2m_changed, sender = Node.fromNodes.through)
+def checkfromNodes(instance, action, **kwargs):
 	
-	incArr = instance.inc.all()
+	fromNodesArr = instance.fromNodes.all()
 	if action == 'post_add':
 		
-		for curNode in incArr:
+		for curNode in fromNodesArr:
 			nodeForUpdating = Node.objects.get(id = curNode.id)
-			targetOut = nodeForUpdating.out.all()
+			toNodesArr = nodeForUpdating.toNodes.all()
 			
-			if not instance in targetOut:
-				nodeForUpdating.out.add(instance)
+			if not instance in toNodesArr:
+				nodeForUpdating.toNodes.add(instance)
 
 
-@receiver(m2m_changed, sender = Node.out.through)
+@receiver(m2m_changed, sender = Node.toNodes.through)
 def checkOut(instance, action, **kwargs):
 	
-	outArr = instance.out.all()
+	outArr = instance.toNodes.all()
 	if action == 'post_add':
 		
 		for curNode in outArr:
 			nodeForUpdating = Node.objects.get(id = curNode.id)
-			targetInc = nodeForUpdating.inc.all()
+			fromNodesArr = nodeForUpdating.fromNodes.all()
 			
-			if not instance in targetInc:
-				nodeForUpdating.inc.add(instance)
+			if not instance in fromNodesArr:
+				nodeForUpdating.fromNodes.add(instance)
 
