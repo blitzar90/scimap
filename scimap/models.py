@@ -39,8 +39,8 @@ class Node(models.Model):
 	out = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
-	lvl1 = models.ManyToManyField(Area, related_name = 'Area')
-	lvl2 = models.ManyToManyField(SubArea, related_name = 'SubArea')
+	lvl1 = models.ManyToManyField(Area, blank = True, related_name = 'Area')
+	lvl2 = models.ManyToManyField(SubArea, blank = True, related_name = 'SubArea')
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)
