@@ -65,8 +65,8 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		links = [];
 
 		for (let node1 of nodes) {
-			if (node1.out) {
-				for (node1_out_id of node1.out) {
+			if (node1.toNodes) {
+				for (node1_out_id of node1.toNodes) {
 					let str = node1.id + '::' + node1_out_id;
 					_obj[str] = true;
 				}
