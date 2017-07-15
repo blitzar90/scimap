@@ -12,6 +12,7 @@ angular.module('scimap', []).config(function($interpolateProvider){
 	};
 
 	var linkCounter = 0;
+	var colorMap = {};
 
 	scope.init = function() {
 		getNodes();
@@ -34,6 +35,9 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		this.id = linkCounter++;
 		this.from = from;
 		this.to = to;
+		this.style = {
+			toDecoration : 'arrow'
+		}
 	}
 
 	function Node(data) {
@@ -44,7 +48,8 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		function ChartNode(data) {
 			this.id = data.id;
 			this.style = {
-				label : data.title
+				label : data.title,
+				fillColor : colorMap[data.area[0]]
 			}
 		}
 
@@ -68,13 +73,13 @@ angular.module('scimap', []).config(function($interpolateProvider){
 			}
 		}
 
-		console.log(_obj);
-
 		for (let key in _obj) {
 			let split = key.split('::');
 
 			links.push(new ChartLink(split[0], split[1]));
 		}
+
+		makeColorMap(nodes);
 
 		return {
 			nodes : nodes.map(el => el.transform()), links
@@ -116,6 +121,29 @@ angular.module('scimap', []).config(function($interpolateProvider){
 	        //     link:{fillColor:"#93B17F"}
 	        // }
 	    });
+	}
+
+	function getRandomColor() {
+		var letters = '0123456789ABCDEF';
+		var color = '#';
+		for (var i = 0; i < 6; i++) {
+			color += letters[Math.floor(Math.random() * 16)];
+		}
+		return color;
+	}
+
+	function makeColorMap(nodes) {
+		for (let node of nodes) {
+			for (let key of node.area) {
+				colorMap[key] = true;
+			}
+		}
+
+		for (key in colorMap) {
+			colorMap[key] = getRandomColor();
+		}
+
+		console.log(colorMap);
 	}
 
 
