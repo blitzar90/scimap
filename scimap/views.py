@@ -96,13 +96,20 @@ def nodes(request):
 	links_base_resp = Link.objects.all()
 	links = linkSerializer(links_base_resp, many = True)
 	for i in xrange(0, len(nodes.data)):
-		if nodes.data[i]['id'] == str(links.data[i]['fromNode']):
-			nodes.data[i]['toNodeLinkInfo']={
-			str(links.data[i]['toNode']):{
-				'title':links.data[i]['title'],
-				'description':links.data[i]['description']
-				}
-			}
+		for g in xrange(0, len(links.data)):
+			if nodes.data[i]['id'] == str(links.data[g]['fromNode']):
+				if len(nodes.data[i]['toNodeLinkInfo']) == 0:
+					nodes.data[i]['toNodeLinkInfo']={
+					str(links.data[g]['toNode']):{
+						'title':links.data[g]['title'],
+						'description':links.data[g]['description']
+						}
+					}
+				else:
+					nodes.data[i]['toNodeLinkInfo'][str(links.data[g]['toNode'])]={
+						'title':links.data[g]['title'],
+						'description':links.data[g]['description']
+					}
 
 
 	
