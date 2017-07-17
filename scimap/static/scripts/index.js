@@ -1,7 +1,7 @@
 angular.module('scimap', []).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('{[').endSymbol(']}');
 })
-.controller('Main', [ '$scope', '$http', function(scope, http) {
+.controller('Main', ['$scope', '$http', function(scope, http) {
 	console.log('hello');
 
 	scope.nodes = [];

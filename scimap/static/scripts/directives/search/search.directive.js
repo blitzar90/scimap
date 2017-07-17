@@ -1,4 +1,4 @@
-angular.module('scimap').directive('search', ['', function() {
+angular.module('scimap').directive('search', [function() {
 	return {
 		name: 'search',
 		// priority: 1,
@@ -12,12 +12,12 @@ angular.module('scimap').directive('search', ['', function() {
 		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
 		restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
 		// template: '<div></div>',
-		templateUrl: './search.directive.html',
+		templateUrl: 'static/scripts/directives/search/search.directive.html',
 		// replace: true,
 		// transclude: true,
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller) {
-			console.log('link', $scope);		
+			console.log('link', $scope);
 		}
 	};
 }]);
