@@ -13,11 +13,11 @@ class toNodesField(serializers.RelatedField):
 class nodeSerializer(serializers.ModelSerializer):
 
 	toNodes = toNodesField(many=True, read_only=True)
-	
+
 	class Meta:
 		model = Node
 		fields = '__all__'
-		depth = 1
+		depth = 0
 
 		
 class routeSerializer(serializers.ModelSerializer):
