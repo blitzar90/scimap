@@ -2,6 +2,7 @@
 
 import sys
 import json
+from pprint import pprint
 
 # django imports
 from django.utils.encoding import force_text
@@ -91,6 +92,20 @@ def nodes(request):
 	nodes_base_resp = Node.objects.all()
 	nodes = nodeSerializer(nodes_base_resp, many = True)
 	
+	# filling toNodeLinkInfo field
+	links_base_resp = Link.objects.all()
+	links = linkSerializer(links_base_resp, many = True)
+	for i in xrange(0, len(nodes.data)):
+		if nodes.data[i]['id'] == str(links.data[i]['fromNode']):
+			nodes.data[i]['toNodeLinkInfo']={
+			str(links.data[i]['toNode']):{
+				'title':links.data[i]['title'],
+				'description':links.data[i]['description']
+				}
+			}
+
+
+	
 	return JsonResponse(nodes.data, safe = False)
 
 
@@ -101,3 +116,10 @@ def routes(request):
 	
 	return JsonResponse(routes.data, safe = False)
 		
+
+def links(request):
+	
+	links_base_resp = Link.objects.all()
+	links = linkSerializer(links_base_resp, many = True)
+	
+	return JsonResponse(links.data, safe = False)

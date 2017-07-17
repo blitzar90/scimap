@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 import uuid
+from jsonfield import JSONField
 
 from .managers import *
 
@@ -9,6 +10,22 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.utils import timezone
+
+class Link(models.Model):
+
+	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
+
+	title = models.TextField(default = 'Untitled')	
+	description = models.TextField(default = 'No description')	
+	fromNode = models.ForeignKey('Node', related_name = '+')
+	toNode = models.ForeignKey('Node', related_name = '+')
+
+	def __str__(self):
+		return self.title.encode('utf8')
+
+	# making link unique 
+	class Meta:
+		unique_together = ('fromNode', 'toNode')
 
 class Area(models.Model):
 
@@ -43,8 +60,11 @@ class Node(models.Model):
 	toNodes = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
-	area = models.ManyToManyField(Area, related_name = 'Area')
-	subArea = models.ManyToManyField(SubArea, blank = True, related_name = 'SubArea')
+	area = models.ManyToManyField('Area', related_name = 'Area')
+	subArea = models.ManyToManyField('Area', related_name = 'SubArea')
+
+	# link info
+	toNodeLinkInfo=JSONField(default=dict)
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)
@@ -70,7 +90,7 @@ class Route(models.Model):
 	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
 
 	title = models.TextField(default = 'Untitled')
-	nodes = models.ManyToManyField(Node)
+	nodes = models.ManyToManyField('Node')
 
 	@property
 	def type(self):
@@ -83,7 +103,7 @@ class Route(models.Model):
 # check and fix one-sided relations before saving
 
 @receiver(m2m_changed, sender = Node.fromNodes.through)
-def checkfromNodes(instance, action, **kwargs):
+def checkFromNodes(instance, action, **kwargs):
 	
 	fromNodesArr = instance.fromNodes.all()
 	if action == 'post_add':
@@ -92,20 +112,25 @@ def checkfromNodes(instance, action, **kwargs):
 			nodeForUpdating = Node.objects.get(id = curNode.id)
 			toNodesArr = nodeForUpdating.toNodes.all()
 			
+			# prevent loop
 			if not instance in toNodesArr:
 				nodeForUpdating.toNodes.add(instance)
 
 
 @receiver(m2m_changed, sender = Node.toNodes.through)
-def checkOut(instance, action, **kwargs):
+def checkToNodes(instance, action, **kwargs):
 	
-	outArr = instance.toNodes.all()
+	toNodesArr = instance.toNodes.all()
 	if action == 'post_add':
 		
-		for curNode in outArr:
+		for curNode in toNodesArr:
 			nodeForUpdating = Node.objects.get(id = curNode.id)
 			fromNodesArr = nodeForUpdating.fromNodes.all()
 			
+			# fill links
+			Link.objects.create(fromNode = instance, toNode = curNode)
+
+			# prevent loop
 			if not instance in fromNodesArr:
 				nodeForUpdating.fromNodes.add(instance)
 
