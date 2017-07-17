@@ -53,8 +53,9 @@ angular.module('scimap', []).config(function($interpolateProvider){
 			this.id = data.id;
 			this.style = {
 				label : data.title,
-				fillColor : colorMap[data.area[0]]
-			}
+				fillColor : colorMap[data.area[0].id]
+			},
+			this.extra = data;
 		}
 
 		this.transform = () => {
@@ -139,7 +140,7 @@ angular.module('scimap', []).config(function($interpolateProvider){
 	function makeColorMap(nodes) {
 		for (let node of nodes) {
 			for (let key of node.area) {
-				colorMap[key] = true;
+				colorMap[key.id] = true;
 			}
 		}
 
