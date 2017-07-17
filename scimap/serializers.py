@@ -4,13 +4,20 @@ from rest_framework import serializers as serializers
 from .models import Route, Node
 
 #general serializers
+class toNodesField(serializers.RelatedField):
+	def to_representation(self, value):
+		return value.id
+
 class nodeSerializer(serializers.ModelSerializer):
+
+	toNodes = toNodesField(many=True, read_only=True)
+
 	class Meta:
 		model = Node
 		fields = '__all__'
-		depth = 0
+		depth = 1
 
-
+		
 class routeSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Route
