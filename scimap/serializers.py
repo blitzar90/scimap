@@ -28,11 +28,11 @@ class routeSerializer(serializers.ModelSerializer):
 class nodeSearchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Node
-		fields = ('id', 'Type', 'title','description')
+		fields = ('id', 'type', 'title','description')
 		depth = 0
 
 class routeSearchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Route
-		fields = ('id', 'Type', 'title', 'description')
+		fields = ('id', 'type', 'title', 'description')
 		depth = 0

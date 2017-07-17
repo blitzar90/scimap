@@ -6,15 +6,25 @@
 
 	<script src="static/libs/jquery/dist/jquery.min.js"></script>
 	<script src="static/libs/angular/angular.min.js"></script>
+	<script src="static/libs/angular-sanitize/angular-sanitize.min.js"></script>
+
+	<script src="static/libs/angular-ui-select/dist/select.min.js"></script>
 
 	<link rel="stylesheet" href="static/libs/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="static/libs/zoomcharts/zoomcharts.css">
 	<link rel="stylesheet" href="static/styles/index.css">
+	<link rel="stylesheet" href="static/libs/angular-ui-select/dist/select.min.css">
 
 	<script src="static/libs/zoomcharts/zoomcharts.js"></script>
 	<script src="static/scripts/index.js"></script>
 
 	<script src="static/scripts/directives/search/search.directive.js"></script>
+
+	<script src="static/scripts/filters/props-filter.js"></script>
+
+	<script>
+		window.csrfmiddlewaretoken = '{{csrf_token}}';
+	</script>
 </head>
 <body ng-app="scimap" ng-controller="Main" ng-init="init()">
 
@@ -23,7 +33,11 @@
 	</div>
 
 	<div class="info">
-		<search on-select="onSelect"></search>
+		<div class="search-field">
+			<search on-select="onSelect"></search>
+		</div>
+
+
 	</div>
 
 </body>

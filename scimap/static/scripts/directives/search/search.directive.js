@@ -1,21 +1,43 @@
-angular.module('scimap').directive('search', [function() {
+angular.module('scimap').directive('search', ['$http', function($http) {
 	return {
 		name: 'search',
-		// priority: 1,
-		// terminal: true,
 		scope: {
-			onSelect : '&onSelect'
-		}, // {} = isolate, true = child, false/undefined = no change
-		controller: function($scope, $element, $attrs, $transclude) {
-			console.log($scope);
+			onSelect : '&'
 		},
-		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+		controller: function($scope, $element, $attrs, $transclude) {
+
+			$scope.types = {
+				node : 'Теорема',
+				route : 'Доказательство'
+			}
+
+			console.log($scope.onSelect);
+			console.log($scope.onSelect());
+			$scope.suggestions = [];
+
+			$scope.onSelectBinding = (item, model) => {
+				$scope.onSelect()(item, model);
+			}
+
+			$scope.getType = (type) => {
+				return $scope.types[type];
+			}
+
+			$scope.refreshSuggestions = (searchWord) => {
+
+				if (!searchWord) return;
+
+				console.log('refreshSuggestions');
+				return $http.get('/api/search/' + searchWord).then(data => {
+					console.log(data);
+					$scope.suggestions = data.data;
+				}, error => {
+					console.log(error);
+				});
+			}
+		},
 		restrict: 'EA', // E = Element, A = Attribute, C = Class, M = Comment
-		// template: '<div></div>',
 		templateUrl: 'static/scripts/directives/search/search.directive.html',
-		// replace: true,
-		// transclude: true,
-		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
 		link: function($scope, iElm, iAttrs, controller) {
 			console.log('link', $scope);
 		}

@@ -1,5 +1,22 @@
 <div class="search-directive">
 	<link rel="stylesheet" href="static/scripts/directives/search/search.directive.css">
-	<input type="text">
-	<button ng-click="onSelectBound()"></button>
+	<ui-select ng-model="text" type="text" reset-search-input="false" on-select="onSelectBinding($item, $model)">
+
+		<ui-select-match placeholder="Начните поиск">
+		<!-- {{$select.selected.title}} -->
+			<div class="usmt-title" ng-bind-html="$select.selected.title"></div>
+			<small class="usmt-type" ng-bind-html="getType($select.selected.type)"></small>
+		</ui-select-match>
+
+		<ui-select-choices repeat="suggestion in suggestions | propsFilter: {title: $select.search }"
+			refresh="refreshSuggestions($select.search)"
+			refresh-delay="0"
+		>
+			<div ng-bind-html="suggestion.title | highlight: $select.search"></div>
+			<small>
+				<span ng-bind-html="getType(suggestion.type) | highlight: $select.search"></span>
+			</small>
+		</ui-select-choices>
+		
+	</ui-select>
 </div>

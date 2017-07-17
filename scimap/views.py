@@ -8,7 +8,7 @@ from django.utils.encoding import force_text
 from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
 # rest_framework imports
 from rest_framework.decorators import api_view

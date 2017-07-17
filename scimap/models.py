@@ -54,7 +54,7 @@ class Node(models.Model):
 	#objects = NodeManager()
 
 	@property
-	def Type(self):
+	def type(self):
 		return 'node'
 
 	def publish(self):
@@ -73,7 +73,7 @@ class Route(models.Model):
 	nodes = models.ManyToManyField(Node)
 
 	@property
-	def Type(self):
+	def type(self):
 		return 'route'
 
 	def __str__(self):

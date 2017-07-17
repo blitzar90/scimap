@@ -1,4 +1,4 @@
-angular.module('scimap', []).config(function($interpolateProvider){
+angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('{[').endSymbol(']}');
 })
 .controller('Main', ['$scope', '$http', function(scope, http) {
@@ -18,8 +18,20 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		getNodes();
 	}
 
-	scope.onSelect = function(el) {
-		console.log(el);
+	scope.onSelect = function(item, model) {
+		console.log(item, model);
+
+		getNode(model.id);
+	}
+
+	function getNode(id) {
+		http.post('/nodes/', { ids : [id] }, {
+			headers : { 'X-CSRFToken' : csrfmiddlewaretoken }
+		}).then(data => {
+			console.log(data);
+		}, error => {
+			console.log(error);
+		});
 	}
 
 	function getNodes() {
@@ -40,7 +52,9 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		this.from = from;
 		this.to = to;
 		this.style = {
-			toDecoration : 'arrow'
+			toDecoration : 'arrow',
+			radius : 3,
+			fillColor : '#444'
 		}
 	}
 

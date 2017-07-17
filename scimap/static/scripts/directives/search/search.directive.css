@@ -4,7 +4,27 @@
 .search-directive input {
 	width: 100%;
 	border-radius: 4px;
-	height: 40px;
+	min-height: 40px;
 	line-height: 40px;
-	font-size: 16px;
+	font-size: 15px;
+	padding-left: 14px;
+	outline:none !important;
+}
+.search-directive .form-control {
+	height: initial;
+	line-height: initial;
+}
+
+.search-directive .btn {
+    /*height: 40px !important;*/
+    /*line-height: 40px !important;*/
+    padding: 10px 14px !important;
+    font-size: 15px;
+}
+
+.search-directive .ui-select-match-text .usmt-title {
+	font-weight: bold;
+}
+.search-directive .ui-select-match-text .usmt-type {
+	color: #727272;
 }
