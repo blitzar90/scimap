@@ -69,7 +69,7 @@ def getNodesById(request, format=None):
 		except Node.DoesNotExist:
 			return HttpResponse(status=404)
 		
-		curNode = nodeSerializer(curNode_base_resp)
+		curNode = nodePostSerializer(curNode_base_resp)
 		data.append(curNode.data)
 
 	return JsonResponse(data, safe = False)

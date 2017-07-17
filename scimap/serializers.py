@@ -17,7 +17,14 @@ class nodeSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Node
 		fields = '__all__'
-		depth = 0
+		depth = 1
+
+class nodePostSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = Node
+		fields = ('id','area', 'subArea', 'title')
+		depth = 1
 
 		
 class routeSerializer(serializers.ModelSerializer):

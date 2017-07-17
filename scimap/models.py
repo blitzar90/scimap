@@ -60,8 +60,8 @@ class Node(models.Model):
 	toNodes = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
-	area = models.ManyToManyField('Area', related_name = 'Area')
-	subArea = models.ManyToManyField('Area', related_name = 'SubArea')
+	area = models.ManyToManyField('Area', related_name = 'areaField')
+	subArea = models.ManyToManyField('Area', related_name = 'subAreaField')
 
 	# link info
 	toNodeLinkInfo=JSONField(default=dict)
