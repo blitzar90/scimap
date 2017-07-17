@@ -1,0 +1,10 @@
+.search-directive {
+}
+
+.search-directive input {
+	width: 100%;
+	border-radius: 4px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+}

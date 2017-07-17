@@ -18,6 +18,10 @@ angular.module('scimap', []).config(function($interpolateProvider){
 		getNodes();
 	}
 
+	scope.onSelect = function(el) {
+		console.log(el);
+	}
+
 	function getNodes() {
 		http.get('/nodes').then((data) => {
 			scope.nodes = data.data;
@@ -92,7 +96,7 @@ angular.module('scimap', []).config(function($interpolateProvider){
 
 		var t = new NetChart({
 	        container: document.getElementById("demo"),
-	        area: { height: null },
+	        area: { height: $('body').height() - 5 },
 	        data : {
 				preloaded : data
 	        },
@@ -155,6 +159,3 @@ angular.module('scimap', []).config(function($interpolateProvider){
 
 
 }]);
-
-// (function() {
-// })();

@@ -27,5 +27,5 @@ class nodeSearchSerializer(serializers.ModelSerializer):
 class routeSearchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Route
-		fields = ('id', 'Type', 'title')
+		fields = ('id', 'Type', 'title', 'description')
 		depth = 0

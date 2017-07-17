@@ -7,29 +7,25 @@
 	<script src="static/libs/jquery/dist/jquery.min.js"></script>
 	<script src="static/libs/angular/angular.min.js"></script>
 
+	<link rel="stylesheet" href="static/libs/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="static/libs/zoomcharts/zoomcharts.css">
+	<link rel="stylesheet" href="static/styles/index.css">
 
+	<script src="static/libs/zoomcharts/zoomcharts.js"></script>
+	<script src="static/scripts/index.js"></script>
+
+	<script src="static/scripts/directives/search/search.directive.js"></script>
 </head>
 <body ng-app="scimap" ng-controller="Main" ng-init="init()">
 
-	<div id="demo"></div>
-
-	
-	<div ng-repeat="node in nodes">
-		{[ node.title ]}
+	<div class="map">
+		<div id="demo"></div>
 	</div>
-	
-	<!-- {% for node in nodes %}
-	<a href="/node/{{ node.id }}"><div>
 
-		<div><h3>{{ node.title }}</h3></div>
-		<div>{{ node.description }}</div>
-		<br>
-		<div>node.created:{{ node.created }}</div>
-		<div>node.updated:{{ node.updated }}</div>
-	</div></a>
-	{% endfor %} -->
-	<script src="static/libs/zoomcharts/zoomcharts.js"></script>
-	<script src="static/scripts/index.js"></script>
+	<div class="info">
+		<!-- <search></search> -->
+		<search on-select="onSelect($event)"></search>
+	</div>
+
 </body>
 </html>

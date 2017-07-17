@@ -1,0 +1,20 @@
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.map {
+	width: calc(100% - 310px);
+	display: inline-block;
+	float: left;
+
+}
+.info {
+	width: 300px;
+	padding: 15px;
+	display: inline-block;
+	background: white;
+	border-left: 1px solid #d6d6d6;
+	height: 100%;
+	float: left;
+}
