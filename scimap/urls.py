@@ -14,6 +14,8 @@ urlpatterns = [
 	
 	url(r'^routes/', routes, name='routes'),
 	
+	url(r'^links/', links, name='links'),
+	
 	url(r'^cabinet/', admin, name='admin page'),
 	
 	url(r'^api/nodes/', getNodesById, name='getNodesById'),
