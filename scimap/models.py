@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 
 import uuid
-from jsonfield import JSONField
 
 from .managers import *
 
@@ -11,27 +10,12 @@ from django.db.models.signals import m2m_changed
 from django.dispatch import receiver
 from django.utils import timezone
 
-class Link(models.Model):
-
-	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
-
-	title = models.TextField(default = 'Untitled')	
-	description = models.TextField(default = 'No description')	
-	fromNode = models.ForeignKey('Node', related_name = '+')
-	toNode = models.ForeignKey('Node', related_name = '+')
-
-	def __str__(self):
-		return self.title.encode('utf8')
-
-	# making link unique 
-	class Meta:
-		unique_together = ('fromNode', 'toNode')
 
 class Area(models.Model):
 
-	title = models.TextField(default = 'Area')
+	#id = models.UUIDField(default = uuid.uuid4, primary_key = True)
 
-	#subs = models.
+	title = models.TextField( default = 'Area Title')
 
 	def __str__(self):
 		return self.title.encode('utf8')
@@ -39,9 +23,9 @@ class Area(models.Model):
 
 class SubArea(models.Model):
 
-	title = models.TextField(default = 'Subarea')
+	title = models.TextField( default = 'Subarea Title')
 
-	#areas = models.
+	#AreaField = models.ForeignKey(Area)
 
 	def __str__(self):
 		return self.title.encode('utf8')
@@ -49,7 +33,7 @@ class SubArea(models.Model):
 
 class Node(models.Model):
 
-	id = models.UUIDField(default=uuid.uuid4, primary_key=True, editable=False)
+	id = models.UUIDField(default=uuid.uuid4, primary_key = True, editable = False)
 	
 	author = models.ForeignKey('auth.User', blank=True, null=True)
 	title = models.TextField(default = 'Untitled')
@@ -60,8 +44,8 @@ class Node(models.Model):
 	toNodes = models.ManyToManyField('self', blank=True, symmetrical = False, related_name='+')
 
 	# sci area
-	area = models.ManyToManyField('Area', related_name = 'areaField')
-	subArea = models.ManyToManyField('Area', related_name = 'subAreaField')
+	area = models.ManyToManyField(Area)
+	subArea = models.ManyToManyField(SubArea, blank = True)
 
 	## link info
 	#toNodeLinkInfo=JSONField(default=dict)
@@ -85,12 +69,29 @@ class Node(models.Model):
 		return self.title.encode('utf8') + ' ' + str(self.id)
 
 
+class Link(models.Model):
+
+	id = models.UUIDField(default = uuid.uuid4, primary_key = True, editable = False)
+
+	title = models.TextField(default = 'Untitled')	
+	description = models.TextField(default = 'No description')	
+	fromNode = models.ForeignKey(Node, related_name = '+')
+	toNode = models.ForeignKey(Node, related_name = '+')
+
+	def __str__(self):
+		return self.title.encode('utf8')
+
+	# making link unique 
+	class Meta:
+		unique_together = ('fromNode', 'toNode')
+
+
 class Route(models.Model):
 
 	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
 
 	title = models.TextField(default = 'Untitled')
-	nodes = models.ManyToManyField('Node')
+	nodes = models.ManyToManyField(Node)
 
 	@property
 	def type(self):

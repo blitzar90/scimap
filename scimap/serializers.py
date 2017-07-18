@@ -1,9 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- coding: UTF-8 -*-
 
-from rest_framework import serializers as serializers
 from .models import Route, Node, Link
 
-#general serializers
+# rest_framework imports
+from rest_framework import serializers as serializers
+
+
+# supplementary classes
 
 class toNodesField(serializers.RelatedField):
 	def to_representation(self, value):
@@ -13,6 +16,8 @@ class fromNodesField(serializers.RelatedField):
 	def to_representation(self, value):
 		return value.id
 
+
+#general serializers
 
 class nodeSerializer(serializers.ModelSerializer):
 
@@ -63,3 +68,4 @@ class routeSearchSerializer(serializers.ModelSerializer):
 		model = Route
 		fields = ('id', 'type', 'title', 'description')
 		depth = 0
+
