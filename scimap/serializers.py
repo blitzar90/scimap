@@ -25,6 +25,10 @@ class nodeSerializer(serializers.ModelSerializer):
 		depth = 1
 
 class nodeFullSerializer(serializers.ModelSerializer):
+
+	toNodes = nodeSerializer(many=True, read_only=True)
+	fromNodes = nodeSerializer(many=True, read_only=True)
+
 	class Meta:
 		model = Node
 		fields = '__all__'

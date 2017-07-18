@@ -20,12 +20,27 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	}
 
 	function getNode(id) {
-		http.post('/nodes/', { ids : [id], full: true }, {
+		http.post('/api/nodes/', { ids : [id], full: true }, {
 			headers : { 'X-CSRFToken' : csrfmiddlewaretoken }
-		}).then(data => {
-			console.log(data.data);
+		}).then(response => {
+			console.log(response.data);
 
-			makeChart(prepareData([data.data[0]]));
+			var data = [];
+			var node = response.data[0];
+			// var mergedNodesIds = data.toNodes.concat(data.fromNodes).map(el => el.id);
+
+			for (let _node of node.toNodes.concat(node.fromNodes)) {
+				data.push(_node);
+			}
+
+			node.toNodes = node.toNodes.map(el => el.id);
+			node.fromNodes = node.fromNodes.map(el => el.id);
+
+			data.push(node);
+
+			console.log(data);
+
+			makeChart(prepareData(data));
 
 		}, error => {
 			console.log(error);
@@ -66,7 +81,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 			this.style = {
 				label : data.title,
 				fillColor : colorMap[data.area[0].id],
-				aura : colorMap[data.area[0].id]
+				aura : data.area[0].id
 			}
 			// this.extra = data;
 		}
@@ -98,6 +113,8 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		}
 
 		makeColorMap(nodes);
+
+		console.log(nodes, links);
 
 		return {
 			nodes : nodes.map(el => el.transform()), links
@@ -152,8 +169,10 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	function makeColorMap(nodes) {
 		for (let node of nodes) {
-			for (let key of node.area) {
-				colorMap[key.id] = true;
+			if (node.area) {
+				for (let key of node.area) {
+					colorMap[key.id] = true;
+				}
 			}
 		}
 
