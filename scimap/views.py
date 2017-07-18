@@ -61,7 +61,6 @@ def getNodesById(request, format=None):
 
 	id_list = request.data['ids']
 	data = list()
-
 	for uuid in id_list:
 
 		try:
@@ -69,9 +68,14 @@ def getNodesById(request, format=None):
 		except Node.DoesNotExist:
 			return HttpResponse(status=404)
 		
-		curNode = nodePostSerializer(curNode_base_resp)
-		data.append(curNode.data)
-
+		try:
+			request.data['full']
+			curNode = nodeFullSerializer(curNode_base_resp)
+			data.append(curNode.data)
+		except KeyError:
+			curNode = nodeSerializer(curNode_base_resp)
+			data.append(curNode.data)
+	print(len(data))
 	return JsonResponse(data, safe = False)
 
 
@@ -98,7 +102,7 @@ def nodes(request):
 	for i in xrange(0, len(nodes.data)):
 		for g in xrange(0, len(links.data)):
 			if nodes.data[i]['id'] == str(links.data[g]['fromNode']):
-				if len(nodes.data[i]['toNodeLinkInfo']) == 0:
+				if getattr(nodes.data[i],'toNodeLinkInfo', True):
 					nodes.data[i]['toNodeLinkInfo']={
 					str(links.data[g]['toNode']):{
 						'title':links.data[g]['title'],

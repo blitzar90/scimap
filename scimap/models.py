@@ -63,8 +63,8 @@ class Node(models.Model):
 	area = models.ManyToManyField('Area', related_name = 'areaField')
 	subArea = models.ManyToManyField('Area', related_name = 'subAreaField')
 
-	# link info
-	toNodeLinkInfo=JSONField(default=dict)
+	## link info
+	#toNodeLinkInfo=JSONField(default=dict)
 
 	created = models.DateTimeField(default=timezone.now)
 	updated = models.DateTimeField(default=timezone.now)

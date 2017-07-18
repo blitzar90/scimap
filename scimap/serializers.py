@@ -9,21 +9,25 @@ class toNodesField(serializers.RelatedField):
 	def to_representation(self, value):
 		return value.id
 
+class fromNodesField(serializers.RelatedField):
+	def to_representation(self, value):
+		return value.id
+
 
 class nodeSerializer(serializers.ModelSerializer):
 
 	toNodes = toNodesField(many=True, read_only=True)
-
+	fromNodes = fromNodesField(many=True, read_only=True)
+	
 	class Meta:
 		model = Node
 		fields = '__all__'
 		depth = 1
 
-class nodePostSerializer(serializers.ModelSerializer):
-
+class nodeFullSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Node
-		fields = ('id','area', 'subArea', 'title')
+		fields = '__all__'
 		depth = 1
 
 		
