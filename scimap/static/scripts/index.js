@@ -6,11 +6,6 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	scope.nodes = [];
 
-	var data = {
-		nodes : [],
-		links : []
-	};
-
 	var linkCounter = 0;
 	var colorMap = {};
 
@@ -25,10 +20,13 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	}
 
 	function getNode(id) {
-		http.post('/nodes/', { ids : [id] }, {
+		http.post('/nodes/', { ids : [id], full: true }, {
 			headers : { 'X-CSRFToken' : csrfmiddlewaretoken }
 		}).then(data => {
-			console.log(data);
+			console.log(data.data);
+
+			makeChart(prepareData([data.data[0]]));
+
 		}, error => {
 			console.log(error);
 		});
@@ -67,9 +65,10 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 			this.id = data.id;
 			this.style = {
 				label : data.title,
-				fillColor : colorMap[data.area[0].id]
-			},
-			this.extra = data;
+				fillColor : colorMap[data.area[0].id],
+				aura : colorMap[data.area[0].id]
+			}
+			// this.extra = data;
 		}
 
 		this.transform = () => {
@@ -107,7 +106,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	function makeChart(data) {
 
-		console.log(data);
+		console.log('makeChart', data);
 
 		var t = new NetChart({
 	        container: document.getElementById("demo"),
