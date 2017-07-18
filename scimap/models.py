@@ -13,8 +13,6 @@ from django.utils import timezone
 
 class Area(models.Model):
 
-	#id = models.UUIDField(default = uuid.uuid4, primary_key = True)
-
 	title = models.TextField( default = 'Area Title')
 
 	def __str__(self):
@@ -25,7 +23,7 @@ class SubArea(models.Model):
 
 	title = models.TextField( default = 'Subarea Title')
 
-	#AreaField = models.ForeignKey(Area)
+	AreasField = models.ManyToManyField(Area, blank = True)
 
 	def __str__(self):
 		return self.title.encode('utf8')
@@ -45,7 +43,7 @@ class Node(models.Model):
 
 	# sci area
 	area = models.ManyToManyField('Area', related_name = 'areaField')
-	subArea = models.ManyToManyField('SubArea', related_name = 'subAreaField', null=True, blank=True)
+	subArea = models.ManyToManyField('SubArea', related_name = 'subAreaField', blank=True)
 
 	## link info
 	#toNodeLinkInfo=JSONField(default=dict)
