@@ -61,7 +61,7 @@ class Node(models.Model):
 
 	# sci area
 	area = models.ManyToManyField('Area', related_name = 'areaField')
-	subArea = models.ManyToManyField('Area', related_name = 'subAreaField')
+	subArea = models.ManyToManyField('SubArea', related_name = 'subAreaField', null=True, blank=True)
 
 	## link info
 	#toNodeLinkInfo=JSONField(default=dict)
@@ -126,11 +126,15 @@ def checkToNodes(instance, action, **kwargs):
 		for curNode in toNodesArr:
 			nodeForUpdating = Node.objects.get(id = curNode.id)
 			fromNodesArr = nodeForUpdating.fromNodes.all()
-			
-			# fill links
-			Link.objects.create(fromNode = instance, toNode = curNode)
 
-			# prevent loop
-			if not instance in fromNodesArr:
-				nodeForUpdating.fromNodes.add(instance)
+			# fill links
+			try:
+				Link.objects.get(fromNode = instance, toNode = curNode)
+			except Link.DoesNotExist:
+				Link.objects.create(fromNode = instance, toNode = curNode)
+				# prevent loop
+				if not instance in fromNodesArr:
+					nodeForUpdating.fromNodes.add(instance)
+
+
 

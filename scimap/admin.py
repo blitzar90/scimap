@@ -11,4 +11,5 @@ admin.site.register(Node)
 admin.site.register(Route)
 admin.site.register(Area)
 admin.site.register(SubArea)
+admin.site.register(Link)
 

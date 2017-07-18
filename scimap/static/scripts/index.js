@@ -77,11 +77,14 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		}
 
 		function ChartNode(data) {
+
+			console.log(data.area);
+
 			this.id = data.id;
 			this.style = {
 				label : data.title,
 				fillColor : colorMap[data.area[0].id],
-				aura : data.area[0].id
+				aura : data.area.map(el => el.id)
 			}
 			// this.extra = data;
 		}
@@ -131,6 +134,8 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	        data : {
 				preloaded : data
 	        },
+	        auras: { overlap: true },
+
 	        // data: { url: "https://zoomcharts.com/dvsl/data/net-chart/discovery-example.json" },
 	        // info:{
 	        //     enabled: true,
