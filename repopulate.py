@@ -115,7 +115,7 @@ for key in areas:
 
 print('Adding nodes')
 
-n = 10 # number of nodes
+n = 50 # number of nodes
 depth = 1 # relevant number of links
 
 for i in xrange(n):

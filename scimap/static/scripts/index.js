@@ -127,7 +127,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	function prepareData(nodes) {
 
-		console.log(nodes);
+		// console.log(nodes);
 
 		nodes = nodes.map(el => new Node(el));
 
@@ -167,15 +167,15 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 				let newLink = new ChartLink(split[0], split[1], key);
 				links.push(newLink);
 
-				console.log('add');
+				// console.log('add');
 			} else {
-				console.log('not add');
+				// console.log('not add');
 			}
 		}
 
 		makeColorMap(nodes);
 
-		console.log(nodes, links);
+		// console.log(nodes, links);
 
 		return {
 			nodes : nodes.map(el => el.transform()), links
@@ -199,8 +199,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 			navigation = {};
 		}
 
-
-		console.log('makeChart', data, data.nodes[0].id, navigation);
+		// console.log('makeChart', data, data.nodes[0].id, navigation);
 
 		currentGraph = new NetChart({
 	        container: document.getElementById("demo"),
@@ -210,7 +209,8 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	        },
 	        navigation,
 	        auras: { 
-	        	overlap: true
+	        	overlap: true,
+	        	cellSize: 20
 	        },
 	        legend : {
 	        	enabled : true
@@ -218,11 +218,8 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	        events : {
 		        onClick: function (event) {
 	                if (event.clickNode) {
-	                	console.log(event.clickNode.data);
 
 	                	let exclude = currentGraph.nodes().map(el => el.data.extra.id);
-
-	                	console.log(exclude);
 
 	                	let nodes = $(event.clickNode.data.extra.toNodes.concat(event.clickNode.data.extra.fromNodes))
 	                		.not($(exclude)).get();
@@ -231,14 +228,10 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	                	let preparedData = prepareData(nodes);
 
-	                	console.log(preparedData);
-
 	                	currentGraph.addData(preparedData);
 
 	                	currentGraphData.nodes = currentGraphData.nodes.concat(preparedData.nodes);
 	                	currentGraphData.links = currentGraphData.links.concat(preparedData.links);
-
-	                	console.log(currentGraphData);
 	                }
 	            }
 	        }
