@@ -89,6 +89,7 @@ class Route(models.Model):
 	id = models.UUIDField(default = uuid.uuid4, primary_key=True, editable=False)
 
 	title = models.TextField(default = 'Untitled')
+	description = models.TextField(default = 'Description')
 	nodes = models.ManyToManyField(Node)
 
 	@property

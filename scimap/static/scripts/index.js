@@ -8,6 +8,10 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	var linkCounter = 0;
 	var colorMap = {};
+	var ALLNODES = {};
+	var ALLLINKS = {};
+	var currentGraph = null;
+	var currentGraphData = {};
 
 	scope.init = function() {
 		getNodes();
@@ -16,7 +20,14 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	scope.onSelect = function(item, model) {
 		console.log(item, model);
 
-		getNode(model.id);
+		if (model.type == 'node') {
+			getNode(model.id); 
+		} else {
+			getRoute(model.id);
+		}
+
+		currentGraphData = {};
+
 	}
 
 	function getNode(id) {
@@ -27,7 +38,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 			var data = [];
 			var node = response.data[0];
-			// var mergedNodesIds = data.toNodes.concat(data.fromNodes).map(el => el.id);
+			node.focus = true;
 
 			for (let _node of node.toNodes.concat(node.fromNodes)) {
 				data.push(_node);
@@ -38,13 +49,25 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 			data.push(node);
 
-			console.log(data);
-
 			makeChart(prepareData(data));
 
 		}, error => {
 			console.log(error);
 		});
+	}
+
+	function getRoute(id) {
+		http.get('/api/route/' + id, {
+			headers : { 'X-CSRFToken' : csrfmiddlewaretoken }
+		}).then(response => {
+			console.log(response.data);
+
+			data = response.data.nodes;
+
+			makeChart(prepareData(data));
+		}, error => {
+			console.log(error);
+		});	
 	}
 
 	function getNodes() {
@@ -60,7 +83,8 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		});
 	}
 
-	function ChartLink(from, to) {
+	function ChartLink(from, to, primaryKey) {
+		this.primaryKey = primaryKey;
 		this.id = linkCounter++;
 		this.from = from;
 		this.to = to;
@@ -78,15 +102,22 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 		function ChartNode(data) {
 
-			console.log(data.area);
-
 			this.id = data.id;
 			this.style = {
 				label : data.title,
 				fillColor : colorMap[data.area[0].id],
-				aura : data.area.map(el => el.id)
+				aura : data.area.map(el => {
+					// return {
+					// 	id : el.id,
+					// 	style : {
+					// 		showInLegend : true,
+					// 		legendGroupId : el.id
+					// 	}
+					// }
+					return el.title;
+				})
 			}
-			// this.extra = data;
+			this.extra = data;
 		}
 
 		this.transform = () => {
@@ -96,7 +127,14 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	function prepareData(nodes) {
 
+		console.log(nodes);
+
 		nodes = nodes.map(el => new Node(el));
+
+		for (let node of nodes) {
+			ALLNODES[node.id] = node;
+		}
+
 		_obj = {};
 		links = [];
 
@@ -107,12 +145,32 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 					_obj[str] = true;
 				}
 			}
+			if (node1.fromNodes) {
+				for (node1_in_id of node1.fromNodes) {
+					let str = node1_in_id + '::' + node1.id;
+					_obj[str] = true;
+				}
+			}
 		}
 
 		for (let key in _obj) {
-			let split = key.split('::');
 
-			links.push(new ChartLink(split[0], split[1]));
+			let exactLinks = [];
+
+
+			if (currentGraphData.links) {
+				exactLinks = currentGraphData.links.map(el => el.primaryKey);
+			}
+
+			if (exactLinks.indexOf(key) == -1) {
+				let split = key.split('::');
+				let newLink = new ChartLink(split[0], split[1], key);
+				links.push(newLink);
+
+				console.log('add');
+			} else {
+				console.log('not add');
+			}
 		}
 
 		makeColorMap(nodes);
@@ -126,15 +184,64 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	function makeChart(data) {
 
-		console.log('makeChart', data);
+		currentGraphData = data;
 
-		var t = new NetChart({
+		let focusNode = data.nodes.filter(el => el.extra.focus)[0];
+
+		let navigation;
+		if (focusNode) {
+			navigation = {
+	        	initialNodes : [focusNode.id],
+	        	mode : 'focusnodes',
+	        	focusNodeExpansionRadius : 1
+			}
+		} else {
+			navigation = {};
+		}
+
+
+		console.log('makeChart', data, data.nodes[0].id, navigation);
+
+		currentGraph = new NetChart({
 	        container: document.getElementById("demo"),
 	        area: { height: $('body').height() - 5 },
 	        data : {
 				preloaded : data
 	        },
-	        auras: { overlap: true },
+	        navigation,
+	        auras: { 
+	        	overlap: true
+	        },
+	        legend : {
+	        	enabled : true
+	        },
+	        events : {
+		        onClick: function (event) {
+	                if (event.clickNode) {
+	                	console.log(event.clickNode.data);
+
+	                	let exclude = currentGraph.nodes().map(el => el.data.extra.id);
+
+	                	console.log(exclude);
+
+	                	let nodes = $(event.clickNode.data.extra.toNodes.concat(event.clickNode.data.extra.fromNodes))
+	                		.not($(exclude)).get();
+
+	                	nodes = nodes.map(el => ALLNODES[el]);
+
+	                	let preparedData = prepareData(nodes);
+
+	                	console.log(preparedData);
+
+	                	currentGraph.addData(preparedData);
+
+	                	currentGraphData.nodes = currentGraphData.nodes.concat(preparedData.nodes);
+	                	currentGraphData.links = currentGraphData.links.concat(preparedData.links);
+
+	                	console.log(currentGraphData);
+	                }
+	            }
+	        }
 
 	        // data: { url: "https://zoomcharts.com/dvsl/data/net-chart/discovery-example.json" },
 	        // info:{
@@ -176,13 +283,15 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		for (let node of nodes) {
 			if (node.area) {
 				for (let key of node.area) {
-					colorMap[key.id] = true;
+					colorMap[key.id] = colorMap[key.id] || true;
 				}
 			}
 		}
 
 		for (key in colorMap) {
-			colorMap[key] = getRandomColor();
+			if (colorMap[key] == true) {
+				colorMap[key] = getRandomColor();
+			}
 		}
 
 		console.log(colorMap);

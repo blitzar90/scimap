@@ -41,10 +41,13 @@ class nodeFullSerializer(serializers.ModelSerializer):
 
 		
 class routeSerializer(serializers.ModelSerializer):
+
+	nodes = nodeSerializer(many=True, read_only=True)
+
 	class Meta:
 		model = Route
 		fields = '__all__'
-		depth = 0
+		depth = 1
 
 
 class linkSerializer(serializers.ModelSerializer):
