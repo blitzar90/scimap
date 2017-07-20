@@ -6,7 +6,7 @@ from .managers import *
 
 # django imports
 from django.db import models
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
@@ -132,9 +132,24 @@ def checkToNodes(instance, action, **kwargs):
 				Link.objects.get(fromNode = instance, toNode = curNode)
 			except Link.DoesNotExist:
 				Link.objects.create(fromNode = instance, toNode = curNode)
-				# prevent loop
+				
+				# loop prevention
 				if not instance in fromNodesArr:
 					nodeForUpdating.fromNodes.add(instance)
 
 
+# establish connections for changed or created link object
 
+@receiver(post_save, sender = Link)
+def checkFromNode(instance, **kwargs):
+
+	nodeInLinkFrom = instance.fromNode
+	nodeInLinkTo = instance.toNode
+	theNode = Node.objects.get(id = nodeInLinkFrom.id)
+	theToArr = theNode.toNodes.all()
+
+	for node in theToArr:
+		if node == nodeInLinkTo:
+			return
+	
+	theNode.toNodes.add(nodeInLinkTo)

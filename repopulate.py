@@ -5,6 +5,9 @@ This script is designed to automatically delete old db objects and fill db with 
 ATTENTION!: this script sould be run in shell mode of manage.py
 >>>> python manage.py shell
 >>>> %run ./repopulate.py
+
+for generating nodes without links in shell run the next command:
+>>>> %run ./repopulate.py links=False
 """
 
 from scimap import models as scimapModels
@@ -12,6 +15,7 @@ from scimap import models as scimapModels
 # math imports
 import numpy as np
 import random
+import sys
 
 ## supplimentary functions
 
@@ -115,7 +119,7 @@ for key in areas:
 
 print('Adding nodes')
 
-n = 50 # number of nodes
+n = 20 # number of nodes
 depth = 1 # relevant number of links
 
 for i in xrange(n):
@@ -127,27 +131,30 @@ Nodes = scimapModels.Node.objects.all()
 SubAreas = scimapModels.SubArea.objects.all()
 Areas = scimapModels.Area.objects.all()
 
+
 # filling many to many fields
 for i in xrange(len(Nodes)):
 	
 	curNode = Nodes[i]
 
-	curNode.subArea.add(SubAreas[getProperRandom(len(SubAreas), i )])
-	curNode.area.add(Areas[getProperRandom( len(Areas), i )])
+	curNode.subArea.add(SubAreas[getProperRandom( len(SubAreas), i )] )
+	curNode.area.add(Areas[getProperRandom( len(Areas), i )] )
 
-	for i in xrange(depth):
+	if not 'links=False' in sys.argv:
+	
+		for i in xrange(depth):
+			
+			if random.random()>0.5: # make different depth
 		
-		if random.random()>0.5: # make different depth
+				curNode.fromNodes.add(Nodes[getProperRandom(  len(Nodes), i )] )
+				curNode.toNodes.add(Nodes[getProperRandom(  len(Nodes), i)] )
+		
+			else:
+		
+				curNode.fromNodes.add(Nodes[getProperRandom(  len(Nodes), i   )] )
+				curNode.toNodes.add(Nodes[getProperRandom( len(Nodes), i  )] )
 	
-			curNode.fromNodes.add(Nodes[getProperRandom(  len(Nodes), i )])
-			curNode.toNodes.add(Nodes[getProperRandom(  len(Nodes), i)])
-	
-		else:
-	
-			curNode.fromNodes.add(Nodes[getProperRandom(  len(Nodes), i   )])
-			curNode.toNodes.add(Nodes[getProperRandom(len(Nodes), i  )])
-
-			break
+				break
 
 	curNode.save()
 
