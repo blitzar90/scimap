@@ -6,7 +6,7 @@ from .managers import *
 
 # django imports
 from django.db import models
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import m2m_changed, post_save, post_delete
 from django.dispatch import receiver
 from django.utils import timezone
 
@@ -112,8 +112,9 @@ def checkFromNodes(instance, action, **kwargs):
 			nodeForUpdating = Node.objects.get(id = curNode.id)
 			toNodesArr = nodeForUpdating.toNodes.all()
 			
-			# prevent loop
+			# loop prevention
 			if not instance in toNodesArr:
+				#print "adding to toNodes"
 				nodeForUpdating.toNodes.add(instance)
 
 
@@ -135,13 +136,14 @@ def checkToNodes(instance, action, **kwargs):
 				
 				# loop prevention
 				if not instance in fromNodesArr:
+					#print "adding to fromNodes"
 					nodeForUpdating.fromNodes.add(instance)
 
 
 # establish connections for changed or created link object
 
 @receiver(post_save, sender = Link)
-def checkFromNode(instance, **kwargs):
+def checkNodeLinks(instance, **kwargs):
 
 	nodeInLinkFrom = instance.fromNode
 	nodeInLinkTo = instance.toNode
@@ -153,3 +155,17 @@ def checkFromNode(instance, **kwargs):
 			return
 	
 	theNode.toNodes.add(nodeInLinkTo)
+
+#@receiver(post_delete, sender = Link)
+#def delNodeLinks(instance, **kwargs):
+#
+#	nodeInLinkFrom = instance.fromNode
+#	nodeInLinkTo = instance.toNode
+#	theNode = Node.objects.get(id = nodeInLinkFrom.id)
+#	theToArr = theNode.toNodes.all()
+#
+#	for node in theToArr:
+#		if node == nodeInLinkTo:
+#			return
+#	
+#	theNode.toNodes.add(nodeInLinkTo)

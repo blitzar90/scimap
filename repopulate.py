@@ -7,7 +7,10 @@ ATTENTION!: this script sould be run in shell mode of manage.py
 >>>> %run ./repopulate.py
 
 for generating nodes without links in shell run the next command:
->>>> %run ./repopulate.py links=False
+>>>> %run ./repopulate.py --links=false
+
+for generating exact amount of nodes you should pass int "amount" argument to --nodeNum
+>>>> %run ./repopulate.py --nodeNum = 100
 """
 
 from scimap import models as scimapModels
@@ -15,7 +18,26 @@ from scimap import models as scimapModels
 # math imports
 import numpy as np
 import random
-import sys
+
+import argparse
+
+
+# parsing initial setup
+parser = argparse.ArgumentParser(description='Parse arguments for inital setup')
+
+parser.add_argument("--links",
+                    choices = ['false', 'true'],
+                    default = 'true',
+                    help = "Create connectrions between nodes or not")
+parser.add_argument("--nodeNum",
+                    default=50,
+                    help = "Number of nodes")
+parser.add_argument("--routeNum",
+                    default=5,
+                    help = "Number of routes")
+
+args = parser.parse_args()
+
 
 ## supplimentary functions
 
@@ -119,7 +141,7 @@ for key in areas:
 
 print('Adding nodes')
 
-n = 20 # number of nodes
+n = int(args.nodeNum) # number of nodes
 depth = 1 # relevant number of links
 
 for i in xrange(n):
@@ -132,17 +154,25 @@ SubAreas = scimapModels.SubArea.objects.all()
 Areas = scimapModels.Area.objects.all()
 
 
+if args.links == 'true':
+	linkStatus = True
+else: 
+	linkStatus = False
+
+
 # filling many to many fields
+
 for i in xrange(len(Nodes)):
-	
+		
 	curNode = Nodes[i]
 
 	curNode.subArea.add(SubAreas[getProperRandom( len(SubAreas), i )] )
 	curNode.area.add(Areas[getProperRandom( len(Areas), i )] )
 
-	if not 'links=False' in sys.argv:
-	
+	if linkStatus:
+
 		for i in xrange(depth):
+			
 			
 			if random.random()>0.5: # make different depth
 		
@@ -155,6 +185,7 @@ for i in xrange(len(Nodes)):
 				curNode.toNodes.add(Nodes[getProperRandom( len(Nodes), i  )] )
 	
 				break
+		
 
 	curNode.save()
 
