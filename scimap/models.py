@@ -114,7 +114,6 @@ def checkFromNodes(instance, action, **kwargs):
 			
 			# loop prevention
 			if not instance in toNodesArr:
-				#print "adding to toNodes"
 				nodeForUpdating.toNodes.add(instance)
 
 
@@ -136,7 +135,6 @@ def checkToNodes(instance, action, **kwargs):
 				
 				# loop prevention
 				if not instance in fromNodesArr:
-					#print "adding to fromNodes"
 					nodeForUpdating.fromNodes.add(instance)
 
 
@@ -147,14 +145,23 @@ def checkNodeLinks(instance, **kwargs):
 
 	nodeInLinkFrom = instance.fromNode
 	nodeInLinkTo = instance.toNode
-	theNode = Node.objects.get(id = nodeInLinkFrom.id)
-	theToArr = theNode.toNodes.all()
+	theFromNode = Node.objects.get(id = nodeInLinkFrom.id)
+	theToNode = Node.objects.get(id = nodeInLinkTo.id)
+	theToArr = theFromNode.toNodes.all()
+	theFromArr = theToNode.fromNodes.all()
 
+	# check for link existance
+	
 	for node in theToArr:
 		if node == nodeInLinkTo:
 			return
 	
-	theNode.toNodes.add(nodeInLinkTo)
+	for node in theFromArr:
+		if node == nodeInLinkFrom:
+			return
+
+	theFromNode.toNodes.add(nodeInLinkTo)
+	theToNode.fromNodes.add(nodeInLinkFrom)
 
 #@receiver(post_delete, sender = Link)
 #def delNodeLinks(instance, **kwargs):
