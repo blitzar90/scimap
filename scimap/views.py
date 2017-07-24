@@ -40,10 +40,33 @@ def node(request, uuid = None):
 		'node' : node
 	})
 
-@api_view(['POST'])
-@parser_classes((JSONParser,))
-def saveNode(request):
-	data = request.data
+def getNodesById(searchData):
+
+	id_list = searchData['ids']
+	data = list()
+	for uuid in id_list:
+
+		try:
+			curNode_base_resp = Node.objects.get(id = uuid)
+		except Node.DoesNotExist:
+			return False
+		
+		if 'full' in searchData:
+			
+			curNode = nodeFullSerializer(curNode_base_resp)
+			data.append(curNode.data)
+
+			return data
+		
+		else:
+			
+			curNode = nodeSerializer(curNode_base_resp)
+			data.append(curNode.data)
+		
+	return data
+
+def saveNode(saveData):
+	data = saveData
 
 	node = Node(title = data['title'])
 	node.save()
@@ -52,30 +75,69 @@ def saveNode(request):
 
 	if not len(areaQS):
 		node.delete()
-		return JsonResponse({'succes': False, 'reason': 'Area not found'})
+		return {'success': False, 'reason': 'Area not found'}
 	else:
 		node.area.add(areaQS[0])
+
+#	if 'author' in data:
+#
+#		node.author = data['author']
+#		node.save()
+
+	if 'description' in data:
+
+		node.description = data['description']
+		node.save()
 
 	if 'subarea' in data:
 		
 		subareaQS = SubArea.objects.filter(title__icontains = data['subarea'])		
- 		print(subareaQS)
 		
 		if not len(subareaQS):
 			node.delete()
-			return JsonResponse({'succes': False, 'reason': 'subarea not found'})
+			return {'success': False, 'reason': 'subarea not found'}
 		else:
 			node.subArea.add(subareaQS[0])
 
 	if 'fromNodes' in data:
-		pass
+		for strId in data['fromNodes']:
+			
+			try:
+				curNode = Node.objects.get(id = strId)
+			except Node.DoesNotExist:
+				return {'success': False, 'reason': 'node with id %s not found' % strId}
+			
+			node.fromNodes.add(curNode)
 
 	if 'toNodes' in data:
-		pass
-
-
+		print 'hello'
+		for strId in data['toNodes']:
+			try:
+				curNode = Node.objects.get(id = strId)
+			except Node.DoesNotExist:
+				return {'success': False, 'reason': 'node with id %s not found' % strId}
+			
+			node.toNodes.add(curNode)
 		
-	return JsonResponse({'succes': True})
+	return {'success': True}
+
+@api_view(['POST'])
+@parser_classes((JSONParser,))
+def nodesHandler(request):
+
+	if 'ids' in request.data:
+
+		data = getNodesById(request.data)
+
+		if not data:
+			return HttpResponse(status=404)
+		else:
+			return JsonResponse(data, safe = False)
+
+	else:
+
+		data = saveNode(request.data)
+		return JsonResponse(data, safe = False)
 
 @api_view(['GET'])
 def getByTitle(request):
@@ -136,30 +198,6 @@ def getByTitle(request):
 	return JsonResponse(data, safe = False)
 
 
-@api_view(['POST'])
-@parser_classes((JSONParser,))
-def getNodesById(request, format=None):
-
-	id_list = request.data['ids']
-	data = list()
-	for uuid in id_list:
-
-		try:
-			curNode_base_resp = Node.objects.get(id = uuid)
-		except Node.DoesNotExist:
-			return HttpResponse(status=404)
-		
-		if 'full' in request.data:
-			
-			curNode = nodeFullSerializer(curNode_base_resp)
-			data.append(curNode.data)
-		
-		else:
-			
-			curNode = nodeSerializer(curNode_base_resp)
-			data.append(curNode.data)
-
-	return JsonResponse(data, safe = False)
 
 
 def getRouteById(request, uuid = None):
