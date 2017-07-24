@@ -40,21 +40,77 @@ def node(request, uuid = None):
 		'node' : node
 	})
 
+@api_view(['POST'])
+@parser_classes((JSONParser,))
+def saveNode(request):
+	data = request.data
 
-def getByTitle(request, title = None):
+	node = Node(title = data['title'])
+	node.save()
+		
+	areaQS = Area.objects.filter(title__icontains = data['area'])
+
+	if not len(areaQS):
+		node.delete()
+		return JsonResponse({'succes': False, 'reason': 'Area not found'})
+	else:
+		node.area.add(areaQS[0])
+
+	if 'subarea' in data:
+		
+		subareaQS = SubArea.objects.filter(title__icontains = data['subarea'])		
+ 		print(subareaQS)
+		
+		if not len(subareaQS):
+			node.delete()
+			return JsonResponse({'succes': False, 'reason': 'subarea not found'})
+		else:
+			node.subArea.add(subareaQS[0])
+
+	if 'fromNodes' in data:
+		pass
+
+	if 'toNodes' in data:
+		pass
+
+
+		
+	return JsonResponse({'succes': True})
+
+@api_view(['GET'])
+def getByTitle(request):
     
-    nodes_base_resp = Node.objects.filter(title__icontains = title)
-    routes_base_resp = Route.objects.filter(title__icontains = title)
-  
-    nodes = nodeSearchSerializer(nodes_base_resp, many = True)
-    routes = routeSearchSerializer(routes_base_resp, many = True)
+	data = request.query_params
 
-    data = nodes.data + routes.data
+	if not 'type' in data:
 
-    return JsonResponse(data, safe = False)
+		nodes_base_resp = Node.objects.filter(title__icontains = data['q'])
+		routes_base_resp = Route.objects.filter(title__icontains = data['q'])
+	  
+		nodes = nodeSearchSerializer(nodes_base_resp, many = True)
+		routes = routeSearchSerializer(routes_base_resp, many = True)
+	
+		data = nodes.data + routes.data
+	
+	elif data['type'] == 'node':
+	
+		nodes_base_resp = Node.objects.filter(title__icontains = data['q'])
+	
+		nodes = nodeSearchSerializer(nodes_base_resp, many = True)
+
+		data = nodes.data
+
+	elif data['type'] == 'route':
+
+		routes_base_resp = Route.objects.filter(title__icontains = data['q'])
+		
+		routes = routeSearchSerializer(routes_base_resp, many = True)
+
+		data = routes.data
+
+	return JsonResponse(data, safe = False)
 
 
-# using rest decorators
 @api_view(['POST'])
 @parser_classes((JSONParser,))
 def getNodesById(request, format=None):
@@ -68,14 +124,16 @@ def getNodesById(request, format=None):
 		except Node.DoesNotExist:
 			return HttpResponse(status=404)
 		
-		try:
-			request.data['full']
+		if 'full' in request.data['full']:
+			
 			curNode = nodeFullSerializer(curNode_base_resp)
 			data.append(curNode.data)
-		except KeyError:
+		
+		else:
+			
 			curNode = nodeSerializer(curNode_base_resp)
 			data.append(curNode.data)
-	print(len(data))
+
 	return JsonResponse(data, safe = False)
 
 

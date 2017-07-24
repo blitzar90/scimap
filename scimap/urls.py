@@ -10,6 +10,8 @@ urlpatterns = [
 	
 	url(r'^node/(?P<uuid>[^/]+)/$', node, name='node'),
 	
+	url(r'^node/', saveNode, name='node'),
+	
 	url(r'^nodes/', nodes, name='nodes'),
 	
 	url(r'^routes/', routes, name='routes'),
@@ -22,6 +24,6 @@ urlpatterns = [
 	
 	url(r'^api/route/(?P<uuid>[^/]+)/$', getRouteById, name='getRouteById'),
 	
-	url(r'^api/search/(?P<title>[^/]+)/$', getByTitle, name='search')
+	url(r'^api/search/', getByTitle, name='search')
 
 ]

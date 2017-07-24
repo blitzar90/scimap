@@ -138,7 +138,7 @@ def checkToNodes(instance, action, **kwargs):
 					nodeForUpdating.fromNodes.add(instance)
 
 
-# establish connections for changed or created link object
+# establish node connections for changed or created link object
 
 @receiver(post_save, sender = Link)
 def checkNodeLinks(instance, **kwargs):
