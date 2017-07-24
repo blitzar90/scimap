@@ -124,7 +124,7 @@ def getNodesById(request, format=None):
 		except Node.DoesNotExist:
 			return HttpResponse(status=404)
 		
-		if 'full' in request.data['full']:
+		if 'full' in request.data:
 			
 			curNode = nodeFullSerializer(curNode_base_resp)
 			data.append(curNode.data)
