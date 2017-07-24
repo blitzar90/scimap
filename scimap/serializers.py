@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 
-from .models import Route, Node, Link
+from .models import *
 
 # rest_framework imports
 from rest_framework import serializers as serializers
@@ -54,10 +54,22 @@ class linkSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Link
 		fields = '__all__'
-		depth = 0
+		depth = 1
+
+class areaSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Area
+		fields = '__all__'
+		depth = 1
+
+class subareaSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = SubArea
+		fields = '__all__'
+		depth = 1
 
 
-# search serializers
+# search serializers with type
 
 class nodeSearchSerializer(serializers.ModelSerializer):
 	class Meta:

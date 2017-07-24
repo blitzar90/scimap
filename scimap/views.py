@@ -80,33 +80,58 @@ def saveNode(request):
 @api_view(['GET'])
 def getByTitle(request):
     
-	data = request.query_params
+	query = request.query_params
 
-	if not 'type' in data:
+	if not 'type' in query:
 
-		nodes_base_resp = Node.objects.filter(title__icontains = data['q'])
-		routes_base_resp = Route.objects.filter(title__icontains = data['q'])
+		nodes_base_resp = Node.objects.filter(title__icontains = query['q'])
+		routes_base_resp = Route.objects.filter(title__icontains = query['q'])
 	  
 		nodes = nodeSearchSerializer(nodes_base_resp, many = True)
 		routes = routeSearchSerializer(routes_base_resp, many = True)
 	
 		data = nodes.data + routes.data
 	
-	elif data['type'] == 'node':
+	elif query['type'] == 'node':
 	
-		nodes_base_resp = Node.objects.filter(title__icontains = data['q'])
+		nodes_base_resp = Node.objects.filter(title__icontains = query['q'])
 	
 		nodes = nodeSearchSerializer(nodes_base_resp, many = True)
 
 		data = nodes.data
 
-	elif data['type'] == 'route':
+	elif query['type'] == 'route':
 
-		routes_base_resp = Route.objects.filter(title__icontains = data['q'])
+		routes_base_resp = Route.objects.filter(title__icontains = query['q'])
 		
 		routes = routeSearchSerializer(routes_base_resp, many = True)
 
 		data = routes.data
+
+	elif query['type'] == 'area':
+
+		areas_base_resp = Area.objects.filter(title__icontains = query['q'])
+		
+		areas = areaSerializer(areas_base_resp, many = True)
+
+		data = areas.data
+
+	elif query['type'] == 'subarea':
+
+		subareas_base_resp = SubArea.objects.filter(title__icontains = query['q'])
+		
+		subareas = subareaSerializer(subareas_base_resp, many = True)
+
+		data = subareas.data
+
+
+	elif query['type'] == 'link':
+
+		links_base_resp = Link.objects.filter(title__icontains = query['q'])
+		
+		links = linkSerializer(links_base_resp, many = True)
+
+		data = links.data
 
 	return JsonResponse(data, safe = False)
 
