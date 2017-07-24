@@ -28,7 +28,7 @@ angular.module('scimap').directive('search', ['$http', function($http) {
 				if (!searchWord) return;
 
 				console.log('refreshSuggestions');
-				return $http.get('/api/search/' + searchWord).then(data => {
+				return $http.get('/api/search?q=' + searchWord).then(data => {
 					console.log(data);
 					$scope.suggestions = data.data;
 				}, error => {

@@ -210,7 +210,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	        navigation,
 	        auras: { 
 	        	overlap: true,
-	        	cellSize: 20
+	        	// cellSize: 20
 	        },
 	        legend : {
 	        	enabled : true
