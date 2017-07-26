@@ -1,0 +1,11 @@
+<div class="info-directive" ng-if="element">
+	<link rel="stylesheet" href="static/scripts/directives/info/info.directive.css">
+	
+	<p class="h2">{{ element.title }}</p>
+	<p class="text">{{ element.description }}</p>
+
+	<div class="nodes-list-container" ng-if="element.type == 'route'">
+		<div ng-click="selectElementBinding(node)" class="each-node" ng-repeat="node in element.nodes">{{ node.title }}</div>
+	</div>
+	
+</div>

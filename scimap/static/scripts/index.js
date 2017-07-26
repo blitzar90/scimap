@@ -12,9 +12,14 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	var ALLLINKS = {};
 	var currentGraph = null;
 	var currentGraphData = {};
+	scope.selectedElement = null;
 
 	scope.init = function() {
 		getNodes();
+	}
+
+	scope.selectElement = function(element) {
+		console.log('$scope.selectElement from info directive', element, currentGraph.nodes());
 	}
 
 	scope.onSelect = function(item, model) {
@@ -51,6 +56,10 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 			makeChart(prepareData(data));
 
+			response.data[0].type = 'node';
+
+        	scope.selectedElement = response.data[0];
+
 		}, error => {
 			console.log(error);
 		});
@@ -65,6 +74,11 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 			data = response.data.nodes;
 
 			makeChart(prepareData(data));
+
+			response.data.type = 'route';
+
+        	scope.selectedElement = response.data;
+
 		}, error => {
 			console.log(error);
 		});	
@@ -232,7 +246,17 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 	                	currentGraphData.nodes = currentGraphData.nodes.concat(preparedData.nodes);
 	                	currentGraphData.links = currentGraphData.links.concat(preparedData.links);
+
+	                	scope.$apply(() => {
+		                	scope.selectedElement = event.clickNode.data.extra;
+	                	});
+
+
+	                	console.log('scope.selectedElement', scope.selectedElement);
 	                }
+	            },
+	            onSelectionChange: function() {
+	            	console.log('onSelectionChange');
 	            }
 	        }
 

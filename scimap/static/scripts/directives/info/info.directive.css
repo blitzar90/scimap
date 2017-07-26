@@ -1,0 +1,12 @@
+.info-directive {
+
+}
+
+.info-directive .nodes-list-container {
+	
+}
+
+.info-directive .nodes-list-container .each-node {
+	cursor: pointer;
+	margin: 10px 0;
+}

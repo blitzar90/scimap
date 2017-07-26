@@ -19,6 +19,7 @@
 	<script src="static/scripts/index.js"></script>
 
 	<script src="static/scripts/directives/search/search.directive.js"></script>
+	<script src="static/scripts/directives/info/info.directive.js"></script>
 
 	<script src="static/scripts/filters/props-filter.js"></script>
 
@@ -32,9 +33,12 @@
 		<div id="demo"></div>
 	</div>
 
-	<div class="info">
+	<div class="panel">
 		<div class="search-field">
 			<search on-select="onSelect"></search>
+		</div>
+		<div class="info-field">
+			<info element="selectedElement" select-element="selectElement"></info>
 		</div>
 
 
