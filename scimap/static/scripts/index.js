@@ -19,7 +19,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 	}
 
 	scope.selectElement = function(element) {
-		console.log('$scope.selectElement from info directive', element, currentGraph.nodes());
+		console.log('$scope.selectElement from info directive', element);
 	}
 
 	scope.onSelect = function(item, model) {
@@ -58,7 +58,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 
 			response.data[0].type = 'node';
 
-        	scope.selectedElement = response.data[0];
+        	scope.selectedElement = connectNodes(response.data);
 
 		}, error => {
 			console.log(error);
@@ -69,15 +69,15 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		http.get('/api/route/' + id, {
 			headers : { 'X-CSRFToken' : csrfmiddlewaretoken }
 		}).then(response => {
-			console.log(response.data);
+			// console.log(response.data);
 
-			data = response.data.nodes;
+			// data = response.data.nodes;
 
-			makeChart(prepareData(data));
+			makeChart(prepareData(response.data.nodes));
 
 			response.data.type = 'route';
 
-        	scope.selectedElement = response.data;
+        	scope.selectedElement = connectNodes(response.data);
 
 		}, error => {
 			console.log(error);
@@ -95,6 +95,24 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		}, (error) => {
 			console.log(error);
 		});
+	}
+
+	function connectNodes(nodes) {
+		setTimeout(() => {
+			var graphNodes = currentGraph.nodes();
+
+			if (nodes.nodes) {
+				for (let node of nodes.nodes) {
+					node.connectedElement = graphNodes.filter(el => node.id == el.id)[0];
+				}
+			} else {
+				for (let node of nodes) {
+					node.connectedElement = graphNodes.filter(el => node.id == el.id)[0];
+				}
+			}
+		});
+
+		return nodes;
 	}
 
 	function ChartLink(from, to, primaryKey) {
@@ -188,6 +206,7 @@ angular.module('scimap', ['ngSanitize', 'ui.select']).config(function($interpola
 		}
 
 		makeColorMap(nodes);
+		// connectNodes(nodes);
 
 		// console.log(nodes, links);
 
